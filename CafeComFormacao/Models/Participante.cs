@@ -18,11 +18,14 @@ namespace CafeComFormacao.Models
             [Required(ErrorMessage = "O número de celular é dado necessário. Preencha-o para prosseguir.")]
             [StringLength(maximumLength: 20, MinimumLength = 8)]
             public string Celular { get; set; }
+            
+            [Required(ErrorMessage = "É necessário cadastrar uma senha. Cadestre-a para prosseguir.")]
+            public string Senha { get; set; }
 
             [Required(ErrorMessage = "É necessário informar seu interesse em obter algum curso do Lidere.")]
             public bool CursoLidere { get; set; }
 
-            public bool StatusPagamento { get; set; }
+            public bool StatusPagamento { get; set; } = false;
 
         }
  }

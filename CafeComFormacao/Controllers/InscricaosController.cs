@@ -1,10 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CafeComFormacao.Models;
+using CafeComFormacao.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CafeComFormacao.Controllers
 {
     public class InscricaosController : Controller
     {
+        private readonly BancoDeDadosService _bancoService;
+
+        public InscricaosController(BancoDeDadosService bancoService)
+        {
+            _bancoService = bancoService;
+        }
+
+
         // GET: InscricaoController
         public ActionResult Index()
         {
@@ -26,16 +36,11 @@ namespace CafeComFormacao.Controllers
         // POST: InscricaoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Criar(Participante participante)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+           _bancoService.Inserir(participante);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: InscricaoController/Edit/5

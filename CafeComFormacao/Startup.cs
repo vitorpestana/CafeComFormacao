@@ -1,4 +1,5 @@
 ﻿using CafeComFormacao.Data;
+using CafeComFormacao.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace CafeComFormacao
@@ -19,6 +20,8 @@ namespace CafeComFormacao
                 builder.MigrationsAssembly("CafeComFormacao")));
 
             services.AddControllersWithViews();
+
+            services.AddScoped<BancoDeDadosService>();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment enviroment)

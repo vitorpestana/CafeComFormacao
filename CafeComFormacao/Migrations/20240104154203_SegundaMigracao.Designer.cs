@@ -2,6 +2,7 @@
 using CafeComFormacao.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeComFormacao.Migrations
 {
     [DbContext(typeof(CafeComFormacaoContext))]
-    partial class CafeComFormacaoContextModelSnapshot : ModelSnapshot
+    [Migration("20240104154203_SegundaMigracao")]
+    partial class SegundaMigracao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,10 +43,6 @@ namespace CafeComFormacao.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Senha")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<bool>("StatusPagamento")
                         .HasColumnType("tinyint(1)");
