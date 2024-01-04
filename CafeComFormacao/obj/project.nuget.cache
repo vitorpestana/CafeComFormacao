@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VA+cGHg99W7HZ5LGsMa01spBTQPfbK9bOb7d+5qzlxY+rHrdx8FFDXc+eazu+8XGulRDIsfVveYmSRV10H2O+Q==",
+  "dgSpecHash": "m70Kh9MGVAAAW42Pyu83cg0GAdihqABasjNEg3N834EbxDfsulQ2EfX72rkkYNexeKSOyuV/gMIsvOqOTVCNQQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao.csproj",
+  "projectFilePath": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vpestana\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\vpestana\\.nuget\\packages\\microsoft.entityframeworkcore\\6.0.0\\microsoft.entityframeworkcore.6.0.0.nupkg.sha512",

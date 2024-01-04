@@ -823,11 +823,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao.csproj",
+      "projectUniqueName": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao.csproj",
       "projectName": "CafeComFormacao",
-      "projectPath": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao.csproj",
+      "projectPath": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao.csproj",
       "packagesPath": "C:\\Users\\vpestana\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\obj\\",
+      "outputPath": "C:\\Users\\vpestana\\Documents\\exercicios c#\\CafeComFormacao\\CafeComFormacao\\CafeComFormacao\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vpestana\\AppData\\Roaming\\NuGet\\NuGet.Config",
