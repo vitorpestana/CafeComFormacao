@@ -1,0 +1,23 @@
+﻿@model CafeComFormacao.Models.Participante
+
+@{
+    ViewData["Title"] = "Login";
+
+    if (ViewBag.Aviso != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Aviso
+        </div>
+    }
+}
+
+<form asp-controller="Login" asp-action="Logar" method="post">
+
+    <label asp-for="Nome" class="control-label"></label>
+    <input asp-for="Nome" class="form-control">
+    
+    <label asp-for="Senha" class="control-label"></label>
+    <input asp-for="Senha" type="password" class="form-control">
+
+    <input type="submit" value="Logar" />
+</form>

@@ -22,6 +22,7 @@ namespace CafeComFormacao
             services.AddControllersWithViews();
 
             services.AddScoped<BancoDeDadosService>();
+            services.AddScoped<LoginService>();
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment enviroment)

@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+
+    if (ViewBag.Aviso != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Aviso
+        </div>
+    }
+}
+
+<form asp-controller="Login" asp-action="Logar" method="post">
+
+    <label for="Usuario" class="control-label">Nome</label>
+    <input name="Usuario" type ="text" class="form-control">
+
+    <label for="Senha" class="control-label">Senha</label>
+    <input name="Senha" type="password" class="form-control">
+
+    <input type="submit" value="Logar" />
+</form>

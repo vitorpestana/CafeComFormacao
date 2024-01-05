@@ -27,6 +27,8 @@ namespace CafeComFormacao.Models
 
             public bool StatusPagamento { get; set; } = false;
 
+            public bool Admin { get; set; } = false;
+
         }
  }
 

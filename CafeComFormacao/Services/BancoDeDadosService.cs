@@ -1,5 +1,6 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CafeComFormacao.Services
 {
@@ -17,5 +18,11 @@ namespace CafeComFormacao.Services
             _context.Add(participante);
             _context.SaveChanges();
         }
+
+        public async Task<List<Participante>> ListarParticipantes()
+        {
+            return await _context.Participante.ToListAsync();
+        }
+
     }
 }

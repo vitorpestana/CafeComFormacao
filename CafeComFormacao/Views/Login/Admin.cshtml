@@ -1,0 +1,31 @@
+﻿@model IEnumerable<CafeComFormacao.Models.Participante>
+
+@{
+    ViewData["Title"] = "Inscritos";
+}
+
+<table class ="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(x => x.Id)</th>
+            <th>@Html.DisplayNameFor(x => x.Nome)</th>
+            <th>@Html.DisplayNameFor(x => x.Email)</th>
+            <th>@Html.DisplayNameFor(x => x.Celular)</th>
+            <th>@Html.DisplayNameFor(x => x.CursoLidere)</th>
+            <th>@Html.DisplayNameFor(x => x.StatusPagamento)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Participante participante in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(x => participante.Id)</td>
+                <td>@Html.DisplayFor(x => participante.Nome)</td>
+                <td>@Html.DisplayFor(x => participante.Email)</td>
+                <td>@Html.DisplayFor(x => participante.Celular)</td>
+                <td>@Html.DisplayFor(x => participante.CursoLidere)</td>
+                <td>@Html.DisplayFor(x => participante.StatusPagamento)</td>
+            </tr>
+        }
+    </tbody>
+</table>

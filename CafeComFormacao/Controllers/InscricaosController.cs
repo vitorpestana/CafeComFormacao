@@ -33,6 +33,13 @@ namespace CafeComFormacao.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Evento()
+        {
+            return View();
+        }
+
         // POST: InscricaoController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -40,7 +47,7 @@ namespace CafeComFormacao.Controllers
         {
            _bancoService.Inserir(participante);
 
-            return RedirectToAction(nameof(Index));
+            return View("Evento");
         }
 
         // GET: InscricaoController/Edit/5
