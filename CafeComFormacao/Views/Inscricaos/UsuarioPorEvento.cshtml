@@ -1,0 +1,51 @@
+﻿@model IEnumerable<CafeComFormacao.Models.Participante>
+
+@{
+    ViewData["Title"] = "Inscritos";
+    ViewBag.MostrarCabecalho = false;
+
+    var eventos = ViewData["Evento"] as IEnumerable<Evento>;
+    var usuarioEvento = ViewData["UsuarioEvento"] as IEnumerable<UsuarioEvento>;
+    var ParticipantesPorEvento = ViewData["ParticipantesPorEvento"] as List<List<Participante>>;
+}
+
+<div class="table-responsive">
+    @foreach (List<Participante> listaParticipantes in ParticipantesPorEvento)
+    {
+        Evento nomeEvento = new();
+
+        foreach (UsuarioEvento usuarioevento in usuarioEvento)
+        {
+            @foreach (Participante participante in listaParticipantes)
+            {
+                Evento resultadoQuery = eventos.Where(e => e.Id == usuarioevento.EventoId && usuarioevento.ParticipanteId == participante.Id).FirstOrDefault();
+            
+                if (resultadoQuery != null)
+                {
+                    nomeEvento = resultadoQuery;
+                }
+            }
+        }
+    
+        <table class="table table-bordered table-hover table-dark">
+            <caption class="caption-top fs-1">@nomeEvento.NomeDoEvento</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Participante participante in listaParticipantes)
+                {
+                    <tr>
+                        <td>@participante.Nome</td>
+                        <td>@participante.Email</td>
+                        <td>@participante.Celular</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

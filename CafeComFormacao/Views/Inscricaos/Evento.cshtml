@@ -1,1 +1,18 @@
-﻿<h1> Tudo certo, página de eventos aqui.</h1>
+﻿@model IEnumerable<CafeComFormacao.Models.Evento>
+@{
+    ViewData["Title"] = "Eventos";
+    int idUsuario = ViewBag.idUsuario;
+}
+
+<form asp-action="InscreverEvento" method="post">
+    <div class="form-group">
+        <select class="form-control custom-select multiple" name="EventosSelecionados">
+            @foreach (Evento evento in Model)
+            {
+                <option value="@evento.Id">@Html.DisplayFor(x => evento.NomeDoEvento)</option>
+            } 
+        </select>
+        <input type="hidden" name="idUsuario" value="@idUsuario" />
+    </div>
+    <button type="submit" class="btn btn-success">Escolher Eventos</button>
+</form>

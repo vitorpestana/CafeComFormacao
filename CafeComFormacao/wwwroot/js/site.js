@@ -1,4 +1,15 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿$(document).ready(function () {
+    $(".opcao_nave-bar").click(function (event) {
+        event.preventDefault();
 
-// Write your JavaScript code.
+        var url = $(this).attr("href");
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $(".ajaxDiv").html(result);
+            }
+        });
+    });
+});

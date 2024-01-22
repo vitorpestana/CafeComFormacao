@@ -3,6 +3,7 @@ using System;
 using CafeComFormacao.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeComFormacao.Migrations
 {
     [DbContext(typeof(CafeComFormacaoContext))]
-    partial class CafeComFormacaoContextModelSnapshot : ModelSnapshot
+    [Migration("20240105173243_setimamigração")]
+    partial class setimamigração
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,8 @@ namespace CafeComFormacao.Migrations
                     b.Property<DateTime>("DataDoEvento")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("HoraDoEvento")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<DateTime>("HoraDoEvento")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("NomeDoEvento")
                         .IsRequired()
@@ -81,46 +82,6 @@ namespace CafeComFormacao.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Participante");
-                });
-
-            modelBuilder.Entity("CafeComFormacao.Models.UsuarioEvento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParticipanteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventoId");
-
-                    b.HasIndex("ParticipanteId");
-
-                    b.ToTable("UsuarioEvento");
-                });
-
-            modelBuilder.Entity("CafeComFormacao.Models.UsuarioEvento", b =>
-                {
-                    b.HasOne("CafeComFormacao.Models.Evento", "Evento")
-                        .WithMany()
-                        .HasForeignKey("EventoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CafeComFormacao.Models.Participante", "Participante")
-                        .WithMany()
-                        .HasForeignKey("ParticipanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Evento");
-
-                    b.Navigation("Participante");
                 });
 #pragma warning restore 612, 618
         }

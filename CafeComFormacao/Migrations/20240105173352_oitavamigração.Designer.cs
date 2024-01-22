@@ -3,6 +3,7 @@ using System;
 using CafeComFormacao.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeComFormacao.Migrations
 {
     [DbContext(typeof(CafeComFormacaoContext))]
-    partial class CafeComFormacaoContextModelSnapshot : ModelSnapshot
+    [Migration("20240105173352_oitavamigração")]
+    partial class oitavamigração
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +30,8 @@ namespace CafeComFormacao.Migrations
                     b.Property<DateTime>("DataDoEvento")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("HoraDoEvento")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<DateTime>("HoraDoEvento")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("NomeDoEvento")
                         .IsRequired()

@@ -1,0 +1,27 @@
+﻿@model CafeComFormacao.Models.Evento
+@{
+    ViewBag.MostrarCabecalho = false;
+}
+
+<div>
+    <form asp-controller="Inscricaos" asp-action="CriarEvento" method="post">
+        <h1 class="text-center">Criar Novo Evento</h1>
+        <div class="form-group mt-lg-5">
+            <label asp-for="NomeDoEvento" class="control-label"></label>
+            <input asp-for="NomeDoEvento" class="form-control" placeholder="Nome do evento">
+        </div>
+        <div class="form-group mt-lg-3">
+            <label asp-for="DataDoEvento" class="control-label"></label>
+            <input asp-for="DataDoEvento" class="form-control" placeholder="Data do evento">
+        </div>
+        <div class="form-group mt-lg-3">
+            <label asp-for="HoraDoEvento" class="control-label"></label>
+            <input asp-for="HoraDoEvento" class="form-control" placeholder="Hora do evento">
+        </div>
+        <div class="form-group mt-lg-3">
+            <label asp-for="ValorDoEvento" class="control-label"></label>
+            <input asp-for="ValorDoEvento" type="text" class="form-control" placeholder="Valor unitário do evento">
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Criar Evento</button>
+    </form>
+</div>

@@ -2,6 +2,8 @@
 using CafeComFormacao.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CafeComFormacao.Controllers
 {
@@ -21,75 +23,82 @@ namespace CafeComFormacao.Controllers
             return View();
         }
 
-        // GET: InscricaoController/Details/5
-        public ActionResult Details(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void InscreverEvento(List<int> eventosSelecionados, int idUsuario)
         {
-            return View();
+            _bancoService.AdicionarEventoAoUsuario(eventosSelecionados, idUsuario);
         }
 
-        // GET: InscricaoController/Create
-        public ActionResult Create()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public void CriarEvento(string nomeDoEvento, DateTime dataDoEvento, string horaDoEvento, double valorDoEvento)
+        {
+            Evento evento = new()
+            {
+                NomeDoEvento = nomeDoEvento,
+                DataDoEvento = dataDoEvento.Date,
+                HoraDoEvento = horaDoEvento,
+                ValorDoEvento = valorDoEvento
+            };
+
+            _bancoService.CriarNovoEvento(evento);
+        }
+
+        public ActionResult NovoEvento()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Evento()
+        public async Task<IActionResult> Criar(Participante participante)
         {
-            return View();
-        }
+            int? idUsuario = await _bancoService.Inserir(participante);
 
-        // POST: InscricaoController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Criar(Participante participante)
-        {
-           _bancoService.Inserir(participante);
-
-            return View("Evento");
-        }
-
-        // GET: InscricaoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: InscricaoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
+            if(idUsuario == null)
             {
-                return RedirectToAction(nameof(Index));
+                throw new ArgumentException("Houve um erro na hora de cadastrar o usuário.");
             }
-            catch
-            {
-                return View();
-            }
+
+            var eventos = await _bancoService.ListarEventos();
+
+            ViewBag.idUsuario = idUsuario; //arrume uma maneira mais segura de passar esse id!
+
+            return View("Evento", eventos);
         }
 
-        // GET: InscricaoController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> ListarParticipantes()
         {
-            return View();
+            var participantes = await _bancoService.ListarParticipantes();
+
+            return View("ListarParticipantes", participantes);
         }
 
-        // POST: InscricaoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> UsuarioPorEvento()
         {
-            try
+            IEnumerable<Evento> eventos = await _bancoService.ListarEventos();
+
+            List<int> idEventos = new();
+
+            foreach (Evento evento in eventos)
             {
-                return RedirectToAction(nameof(Index));
+                idEventos.Add(evento.Id);
             }
-            catch
+
+            ViewsModels viewsModels = new ViewsModels()
             {
-                return View();
-            }
+                ParticipantesPorEvento = _bancoService.TodosOsUsuariosPorEvento(idEventos),
+                Participantes = await _bancoService.ListarParticipantes(),
+                Eventos = eventos,
+                UsuarioEventos = await _bancoService.ListarTodosOsUsuariosPorEvento()
+            };
+
+            ViewData["Evento"] = viewsModels.Eventos;
+            ViewData["UsuarioEvento"] = viewsModels.UsuarioEventos;
+            ViewData["ParticipantesPorEvento"] = viewsModels.ParticipantesPorEvento;
+
+            return View("UsuarioPorEvento", viewsModels.Participantes);
         }
     }
 }

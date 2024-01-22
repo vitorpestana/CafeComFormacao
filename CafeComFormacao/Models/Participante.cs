@@ -1,8 +1,12 @@
 ﻿
+using CafeComFormacao.Services;
+
 namespace CafeComFormacao.Models
  {
         public class Participante
         {
+        private readonly BancoDeDadosService _bancoService;
+
             [Key]
             public int Id { get; set; }
 
@@ -28,6 +32,11 @@ namespace CafeComFormacao.Models
             public bool StatusPagamento { get; set; } = false;
 
             public bool Admin { get; set; } = false;
+
+            public Task<List<Participante>> Listar()
+            {
+                return _bancoService.ListarParticipantes();
+            } 
 
         }
  }

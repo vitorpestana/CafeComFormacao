@@ -1,31 +1,25 @@
-﻿@model IEnumerable<CafeComFormacao.Models.Participante>
-
-@{
-    ViewData["Title"] = "Inscritos";
-}
-
-<table class ="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(x => x.Id)</th>
-            <th>@Html.DisplayNameFor(x => x.Nome)</th>
-            <th>@Html.DisplayNameFor(x => x.Email)</th>
-            <th>@Html.DisplayNameFor(x => x.Celular)</th>
-            <th>@Html.DisplayNameFor(x => x.CursoLidere)</th>
-            <th>@Html.DisplayNameFor(x => x.StatusPagamento)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Participante participante in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(x => participante.Id)</td>
-                <td>@Html.DisplayFor(x => participante.Nome)</td>
-                <td>@Html.DisplayFor(x => participante.Email)</td>
-                <td>@Html.DisplayFor(x => participante.Celular)</td>
-                <td>@Html.DisplayFor(x => participante.CursoLidere)</td>
-                <td>@Html.DisplayFor(x => participante.StatusPagamento)</td>
-            </tr>
-        }
-    </tbody>
-</table>
+﻿<nav id="adminSideBar" class="sidebar col-1 start-0 rounded text-ligh">
+    <div class="sidebar">
+        <ul class="nav col-sm">
+            <li class="nav-item">
+                <a asp-controller="Inscricaos" asp-action="NovoEvento" class="nav-link active opcao_nave-bar">
+                    Criar Evento
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Inscricaos" asp-action="ListarParticipantes" class="nav-link active opcao_nave-bar">
+                    Listar Participantes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Inscricaos" asp-action="UsuarioPorEvento" class="nav-link active opcao_nave-bar">
+                    Listar Eventos por Participantes
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="d-flex align-items-center justify-content-center">
+        <div class="ajaxDiv">
+        </div>
+</div>
