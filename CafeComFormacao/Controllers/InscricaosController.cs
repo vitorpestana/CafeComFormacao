@@ -25,14 +25,16 @@ namespace CafeComFormacao.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void InscreverEvento(List<int> eventosSelecionados, int idUsuario)
+        public IActionResult InscreverEvento(List<int> eventosSelecionados, int idUsuario)
         {
             _bancoService.AdicionarEventoAoUsuario(eventosSelecionados, idUsuario);
+
+            return View("./Views/Home/Index.cshtml");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public void CriarEvento(string nomeDoEvento, DateTime dataDoEvento, string horaDoEvento, double valorDoEvento)
+        public IActionResult CriarEvento(string nomeDoEvento, DateTime dataDoEvento, string horaDoEvento, double valorDoEvento)
         {
             Evento evento = new()
             {
@@ -43,6 +45,8 @@ namespace CafeComFormacao.Controllers
             };
 
             _bancoService.CriarNovoEvento(evento);
+
+            return View("./Views/Login/Admin.cshtml");
         }
 
         public ActionResult NovoEvento()
@@ -77,28 +81,20 @@ namespace CafeComFormacao.Controllers
 
         public async Task<IActionResult> UsuarioPorEvento()
         {
-            IEnumerable<Evento> eventos = await _bancoService.ListarEventos();
-
-            List<int> idEventos = new();
-
-            foreach (Evento evento in eventos)
-            {
-                idEventos.Add(evento.Id);
-            }
-
-            ViewsModels viewsModels = new ViewsModels()
-            {
-                ParticipantesPorEvento = _bancoService.TodosOsUsuariosPorEvento(idEventos),
-                Participantes = await _bancoService.ListarParticipantes(),
-                Eventos = eventos,
-                UsuarioEventos = await _bancoService.ListarTodosOsUsuariosPorEvento()
-            };
+            ViewsModels viewsModels = await _bancoService.PrepararViewsModels();
 
             ViewData["Evento"] = viewsModels.Eventos;
             ViewData["UsuarioEvento"] = viewsModels.UsuarioEventos;
             ViewData["ParticipantesPorEvento"] = viewsModels.ParticipantesPorEvento;
 
-            return View("UsuarioPorEvento", viewsModels.Participantes);
+            return View("UsuarioPorEvento");
+        }
+
+        public async  Task<IActionResult> ListarTodosOsEventosDoUsuario(int usuarioId)
+        {
+            List<Evento> eventosDoUsuario = await _bancoService.ListarEventosDoUsuario(usuarioId);
+
+            return View("EventosDoUsuario", eventosDoUsuario);
         }
     }
 }

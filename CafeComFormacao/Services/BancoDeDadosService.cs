@@ -64,15 +64,51 @@ namespace CafeComFormacao.Services
 
             return usuariosPorEvento;
         }
+
         public List<Participante> ListarUsuariosPorEvento(int eventoId)
         {
 
             return (from Participante participante in _context.Participante
-                          join UsuarioEvento usuarioEvento in _context.UsuarioEvento on participante.Id equals usuarioEvento.ParticipanteId
-                          join Evento evento in _context.Evento on usuarioEvento.EventoId equals evento.Id
-                          where usuarioEvento.EventoId == eventoId
-                          select participante).ToList();
+                    join UsuarioEvento usuarioEvento in _context.UsuarioEvento on participante.Id equals usuarioEvento.ParticipanteId
+                    join Evento evento in _context.Evento on usuarioEvento.EventoId equals evento.Id
+                    where usuarioEvento.EventoId == eventoId
+                    select participante).ToList();
 
+        }
+
+        public async Task<ViewsModels> PrepararViewsModels()
+        {
+            IEnumerable<Evento> eventos = await this.ListarEventos();
+
+            List<int> idEventos = new();
+
+            foreach (Evento evento in eventos)
+            {
+                idEventos.Add(evento.Id);
+            }
+
+            List<List<Participante>> listaDeParticipantesPorEvento = this.TodosOsUsuariosPorEvento(idEventos);
+
+            listaDeParticipantesPorEvento.RemoveAll(listaDeParcipantesDoEvento => listaDeParcipantesDoEvento.Count() == 0);
+
+            ViewsModels viewsModels = new ViewsModels()
+            {
+                ParticipantesPorEvento = listaDeParticipantesPorEvento,
+                Participantes = await this.ListarParticipantes(),
+                Eventos = eventos,
+                UsuarioEventos = await this.ListarTodosOsUsuariosPorEvento(),
+            };
+
+            return viewsModels;
+        }
+
+        public async Task<List<Evento>>  ListarEventosDoUsuario(int usuarioId)
+        {
+
+            return await (from Evento evento in _context.Evento
+                          join UsuarioEvento usuarioEvento in _context.UsuarioEvento on evento.Id equals usuarioEvento.EventoId
+                          where usuarioEvento.ParticipanteId == usuarioId
+                          select evento).ToListAsync();
         }
     }
 }

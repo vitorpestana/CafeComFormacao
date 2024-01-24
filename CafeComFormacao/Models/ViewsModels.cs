@@ -6,5 +6,6 @@
         public IEnumerable<Participante> Participantes { get; set; }
         public List<List<Participante>> ParticipantesPorEvento { get; set; }
         public IEnumerable<UsuarioEvento> UsuarioEventos { get; set;}
+        public List<int> IdsEventos { get; set; }
     }
 }

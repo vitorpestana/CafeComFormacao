@@ -1,0 +1,27 @@
+﻿@model IEnumerable<CafeComFormacao.Models.Evento>
+
+@{
+    ViewBag.MostrarCabecalho = false;
+}
+
+<div class="container-fluid">
+    <table class="table table-bordered table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Data</th>
+                <th scope="col">Horário</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Evento evento in Model)
+            {
+                <tr>
+                    <td>@evento.NomeDoEvento</td>
+                    <td>@evento.DataDoEvento.ToString("dd/MM/yyyy")</td>
+                    <td>@evento.HoraDoEvento</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
