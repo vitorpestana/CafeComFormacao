@@ -8,7 +8,7 @@
         public DateTime DataDoEvento { get; set; }
         public string HoraDoEvento { get; set; }
         public double ValorDoEvento { get; set; }
-        public  bool Equals(Evento other)
+        public bool Equals(Evento other)
         {
             if (other == null)
                 return false;

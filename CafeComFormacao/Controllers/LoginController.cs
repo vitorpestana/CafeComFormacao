@@ -1,8 +1,10 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Models;
 using CafeComFormacao.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using System.Security.Claims;
 
 namespace CafeComFormacao.Controllers
 {
@@ -28,21 +30,40 @@ namespace CafeComFormacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logar(string usuario, string senha)
         {
-            bool login = await _loginService.VerificarUsuario(usuario.Trim(), senha.Trim());
-            bool adm = await _loginService.VerificarSeEhAdmin(usuario.Trim(), senha.Trim());
+            (bool, Participante) login = await _loginService.VerificarUsuario(usuario.Trim(), senha.Trim());
 
-            if (!login) 
+            List<Claim> claims = new();
+
+            if (login.Item2 == null) 
             {
                 ViewBag.Aviso = "Usuário ou senha incorretos!";
                 
                 return View("Index");
             }else 
-            if(login && adm)
+            if(login.Item2 != null && login.Item1)
             {
+                claims.Add(new(ClaimTypes.Name, login.Item2.Nome));
+                claims.Add(new(ClaimTypes.Sid, login.Item2.Id.ToString()));
+
+                ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
+
+                ClaimsPrincipal principalAdm = new(identidadeDoUsuarioAdmn);
+
+                await HttpContext.SignInAsync("CookieAuthentication", principalAdm, new AuthenticationProperties());
+
                 var participantes = await _bancoDeDadosService.ListarParticipantes();
 
                 return View("Admin", participantes);
             }
+
+            claims.Add(new(ClaimTypes.Name, login.Item2.Nome));
+            claims.Add(new(ClaimTypes.Sid, login.Item2.Id.ToString()));
+
+            ClaimsIdentity identidadeDoUsuario = new(claims, "Acesso");
+
+            ClaimsPrincipal principal = new(identidadeDoUsuario);
+
+            await HttpContext.SignInAsync("CookieAuthentication", principal, new AuthenticationProperties());
 
             return View("Usuario");
         }

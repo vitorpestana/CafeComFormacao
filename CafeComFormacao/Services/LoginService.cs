@@ -1,4 +1,5 @@
 ﻿using CafeComFormacao.Data;
+using CafeComFormacao.Models;
 
 namespace CafeComFormacao.Services
 {
@@ -12,10 +13,11 @@ namespace CafeComFormacao.Services
             _context = context;
         }
 
-        public async Task<bool> VerificarUsuario(string usuario, string senha)
+        public async Task<(bool, Participante)> VerificarUsuario(string usuario, string senha)
         {
-            var ehUsuario = await _context.Participante.Where(x => x.Nome.Trim() == usuario && x.Senha.Trim() == senha).ToListAsync();
-            return ehUsuario.Any();
+            Participante participante = await _context.Participante.Where(x => x.Nome.Trim() == usuario && x.Senha.Trim() == senha).FirstOrDefaultAsync();
+
+            return (participante.Admin, participante);
         }
         
         public async Task<bool> VerificarSeEhAdmin(string usuario, string senha)

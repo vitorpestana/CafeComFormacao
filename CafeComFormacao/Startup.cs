@@ -19,6 +19,12 @@ namespace CafeComFormacao
                 options.UseMySql(Configuration.GetConnectionString("CafeComFormacaoContext"), new MySqlServerVersion(new Version(8, 0, 35)), builder =>
                 builder.MigrationsAssembly("CafeComFormacao")));
 
+            services.AddAuthentication("CookieAuthentication").AddCookie("CookieAuthentication", option =>
+            {
+                option.LoginPath = "/Login/Index";
+                option.AccessDeniedPath = "/Login/Ops";
+            });
+
             services.AddControllersWithViews();
 
             services.AddScoped<BancoDeDadosService>();
@@ -39,6 +45,7 @@ namespace CafeComFormacao
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
