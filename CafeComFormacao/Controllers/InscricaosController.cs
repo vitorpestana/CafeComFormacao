@@ -81,10 +81,8 @@ namespace CafeComFormacao.Controllers
 
         public async Task<IActionResult> UsuarioPorEvento()
         {
-            ViewsModels viewsModels = await _bancoService.PrepararViewsModels();
+            ViewsModels viewsModels = await _bancoService.PrepararParticipantesPorEventoViewsModels();
 
-            ViewData["Evento"] = viewsModels.Eventos;
-            ViewData["UsuarioEvento"] = viewsModels.UsuarioEventos;
             ViewData["ParticipantesPorEvento"] = viewsModels.ParticipantesPorEvento;
 
             return View("UsuarioPorEvento");

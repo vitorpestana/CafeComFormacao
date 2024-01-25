@@ -53,53 +53,54 @@ namespace CafeComFormacao.Services
         }
 
 
-        public List<List<Participante>> TodosOsUsuariosPorEvento(List<int> eventosIds)
+        public async Task<Dictionary<Evento, List<Participante>>> TodosOsUsuariosPorEvento(List<int> eventosIds)
         {
-            List<List<Participante>> usuariosPorEvento = new();
+            Dictionary<Evento, List<Participante>> usuariosPorEvento = new();
 
             foreach (int idEvento in eventosIds)
             {
-                usuariosPorEvento.Add(ListarUsuariosPorEvento(idEvento));
+                usuariosPorEvento.Add(await EventoDaListaDeParticipantes(idEvento), await ListarUsuariosPorEvento(idEvento));
             }
+
+            List<Evento> listaARemover = usuariosPorEvento.Where(listaParticipante => listaParticipante.Value.Count == 0)
+                                                           .Select(parChaveValor => parChaveValor.Key)
+                                                           .ToList();
+            foreach (Evento chave in listaARemover)
+            {
+                usuariosPorEvento.Remove(chave);
+            };
 
             return usuariosPorEvento;
         }
 
-        public List<Participante> ListarUsuariosPorEvento(int eventoId)
+        public async Task<List<Participante>> ListarUsuariosPorEvento(int eventoId)
         {
 
-            return (from Participante participante in _context.Participante
+            return await (from Participante participante in _context.Participante
                     join UsuarioEvento usuarioEvento in _context.UsuarioEvento on participante.Id equals usuarioEvento.ParticipanteId
                     join Evento evento in _context.Evento on usuarioEvento.EventoId equals evento.Id
                     where usuarioEvento.EventoId == eventoId
-                    select participante).ToList();
+                    select participante).ToListAsync();
 
         }
 
-        public async Task<ViewsModels> PrepararViewsModels()
+        public async Task<ViewsModels> PrepararTudoViewsModels()
         {
-            IEnumerable<Evento> eventos = await this.ListarEventos();
-
-            List<int> idEventos = new();
-
-            foreach (Evento evento in eventos)
+            return new ViewsModels()
             {
-                idEventos.Add(evento.Id);
-            }
-
-            List<List<Participante>> listaDeParticipantesPorEvento = this.TodosOsUsuariosPorEvento(idEventos);
-
-            listaDeParticipantesPorEvento.RemoveAll(listaDeParcipantesDoEvento => listaDeParcipantesDoEvento.Count() == 0);
-
-            ViewsModels viewsModels = new ViewsModels()
-            {
-                ParticipantesPorEvento = listaDeParticipantesPorEvento,
-                Participantes = await this.ListarParticipantes(),
-                Eventos = eventos,
-                UsuarioEventos = await this.ListarTodosOsUsuariosPorEvento(),
+                ParticipantesPorEvento = await TodosOsUsuariosPorEvento(await ObterIdsDosEventos()),
+                Participantes = await ListarParticipantes(),
+                Eventos = await ListarEventos(),
+                UsuarioEventos = await ListarTodosOsUsuariosPorEvento()
             };
+        }
 
-            return viewsModels;
+        public async Task<ViewsModels> PrepararParticipantesPorEventoViewsModels()
+        {
+            return new ViewsModels()
+            {
+                ParticipantesPorEvento = await TodosOsUsuariosPorEvento(await ObterIdsDosEventos()),
+            };
         }
 
         public async Task<List<Evento>>  ListarEventosDoUsuario(int usuarioId)
@@ -109,6 +110,19 @@ namespace CafeComFormacao.Services
                           join UsuarioEvento usuarioEvento in _context.UsuarioEvento on evento.Id equals usuarioEvento.EventoId
                           where usuarioEvento.ParticipanteId == usuarioId
                           select evento).ToListAsync();
+        }
+
+        public async Task<Evento> EventoDaListaDeParticipantes(int idEvento)
+        {
+            return  await (from Evento evento in _context.Evento
+                         where evento.Id == idEvento
+                          select evento).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<int>> ObterIdsDosEventos()
+        {
+            return await (from Evento evento in _context.Evento
+                    select evento.Id).ToListAsync();
         }
     }
 }

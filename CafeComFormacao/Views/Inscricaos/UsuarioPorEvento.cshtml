@@ -1,25 +1,16 @@
 ﻿@{
-
     ViewBag.MostrarCabecalho = false;
 
     ViewData["Title"] = "Inscritos";
-    var eventos = ViewData["Evento"] as IEnumerable<Evento>;
-    var usuarioEvento = ViewData["UsuarioEvento"] as IEnumerable<UsuarioEvento>;
-    var ParticipantesPorEvento = ViewData["ParticipantesPorEvento"] as List<List<Participante>>;
 
-    Evento eventoEmQuestao = new();
+    var ParticipantesPorEvento = ViewData["ParticipantesPorEvento"] as Dictionary<Evento, List<Participante>>;
 }
 
 <div class="table-responsive">
-    @foreach (List<Participante> listaParticipantes in ParticipantesPorEvento)
+    @foreach (KeyValuePair <Evento, List <Participante>> IdEventoParticipante in ParticipantesPorEvento)
     {
-
-        eventoEmQuestao = (from evento in eventos
-                           join usuariosEvento in usuarioEvento on evento.Id equals usuariosEvento.EventoId
-                           where listaParticipantes[0].Id == usuariosEvento.ParticipanteId
-                           select evento).Distinct().FirstOrDefault();
-
-        //eventoEmQuestao = eventos.Where(evento => usuarioEvento.Any(ue => ue.ParticipanteId == listaParticipantes[0].Id && ue.EventoId == evento.Id)).LastOrDefault();
+        Evento eventoEmQuestao = IdEventoParticipante.Key;
+        List<Participante> listaParticipantes = IdEventoParticipante.Value;
 
         <div class="container-fluid mt-5 border border-warning">
             <h1>@eventoEmQuestao.NomeDoEvento</h1>
@@ -28,8 +19,8 @@
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
-                        <th scope="col">Celular</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Celular</th>
                     </tr>
                 </thead>
                 <tbody>
