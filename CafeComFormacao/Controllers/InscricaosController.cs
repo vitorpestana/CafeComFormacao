@@ -1,5 +1,6 @@
 ﻿using CafeComFormacao.Models;
-using CafeComFormacao.Services;
+using CafeComFormacao.Interfaces;
+using CafeComFormacao.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,11 +10,15 @@ namespace CafeComFormacao.Controllers
 {
     public class InscricaosController : Controller
     {
-        private readonly BancoDeDadosService _bancoService;
+        private readonly IParticipanteRepository _participanteRepository;
+        private readonly IEventoRepository _eventoRepository;
+        private readonly IViewsModelsRepository _viewsModelsRepository;
 
-        public InscricaosController(BancoDeDadosService bancoService)
+        public InscricaosController(IParticipanteRepository participanteRepository, IEventoRepository eventoRepository, IViewsModelsRepository viewsModelsRepository)
         {
-            _bancoService = bancoService;
+            _participanteRepository = participanteRepository;
+            _eventoRepository = eventoRepository;
+            _viewsModelsRepository = viewsModelsRepository;
         }
 
 
@@ -27,7 +32,7 @@ namespace CafeComFormacao.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult InscreverEvento(List<int> eventosSelecionados, int idUsuario)
         {
-            _bancoService.AdicionarEventoAoUsuario(eventosSelecionados, idUsuario);
+            _eventoRepository.AdicionarEventoAoUsuario(eventosSelecionados, idUsuario);
 
             return View("./Views/Home/Index.cshtml");
         }
@@ -44,7 +49,7 @@ namespace CafeComFormacao.Controllers
                 ValorDoEvento = valorDoEvento
             };
 
-            _bancoService.CriarNovoEvento(evento);
+            _eventoRepository.CriarNovoEvento(evento);
 
             return View("./Views/Login/Admin.cshtml");
         }
@@ -58,14 +63,14 @@ namespace CafeComFormacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Criar(Participante participante)
         {
-            int? idUsuario = await _bancoService.Inserir(participante);
+            int? idUsuario = await _participanteRepository.Inserir(participante);
 
             if(idUsuario == null)
             {
                 throw new ArgumentException("Houve um erro na hora de cadastrar o usuário.");
             }
 
-            var eventos = await _bancoService.ListarEventos();
+            var eventos = await _eventoRepository.ListarEventos();
 
             ViewBag.idUsuario = idUsuario; //arrume uma maneira mais segura de passar esse id!
 
@@ -74,14 +79,14 @@ namespace CafeComFormacao.Controllers
 
         public async Task<IActionResult> ListarParticipantes()
         {
-            var participantes = await _bancoService.ListarParticipantes();
+            var participantes = await _participanteRepository.ListarParticipantes();
 
             return View("ListarParticipantes", participantes);
         }
 
         public async Task<IActionResult> UsuarioPorEvento()
         {
-            ViewsModels viewsModels = await _bancoService.PrepararParticipantesPorEventoViewsModels();
+            ViewsModels viewsModels = await _viewsModelsRepository.PrepararParticipantesPorEventoViewsModels();
 
             ViewData["ParticipantesPorEvento"] = viewsModels.ParticipantesPorEvento;
 
@@ -90,7 +95,7 @@ namespace CafeComFormacao.Controllers
 
         public async  Task<IActionResult> ListarTodosOsEventosDoUsuario(int usuarioId)
         {
-            List<Evento> eventosDoUsuario = await _bancoService.ListarEventosDoUsuario(usuarioId);
+            List<Evento> eventosDoUsuario = await _eventoRepository.ListarEventosDoUsuario(usuarioId);
 
             return View("EventosDoUsuario", eventosDoUsuario);
         }

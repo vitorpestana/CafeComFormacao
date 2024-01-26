@@ -1,9 +1,8 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Models;
-using CafeComFormacao.Services;
+using CafeComFormacao.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using MySqlConnector;
 using System.Security.Claims;
 
 namespace CafeComFormacao.Controllers
@@ -11,14 +10,14 @@ namespace CafeComFormacao.Controllers
     public class LoginController : Controller
     {
         private readonly CafeComFormacaoContext _context;
-        private readonly LoginService _loginService;
-        private readonly BancoDeDadosService _bancoDeDadosService;
+        private readonly ILoginService _loginService;
+        private readonly IParticipanteRepository _participanteRepository;
 
-        public LoginController(CafeComFormacaoContext context, LoginService login, BancoDeDadosService bancoService)
+        public LoginController(CafeComFormacaoContext context, ILoginService login, IParticipanteRepository participanteRepository)
         {
             _context = context;
             _loginService = login;
-            _bancoDeDadosService = bancoService;
+            _participanteRepository = participanteRepository;
         }
 
         public IActionResult Index()
@@ -32,8 +31,6 @@ namespace CafeComFormacao.Controllers
         {
             (bool, Participante) login = await _loginService.VerificarUsuario(usuario.Trim(), senha.Trim());
 
-            List<Claim> claims = new();
-
             if (login.Item2 == null) 
             {
                 ViewBag.Aviso = "Usuário ou senha incorretos!";
@@ -42,26 +39,16 @@ namespace CafeComFormacao.Controllers
             }else 
             if(login.Item2 != null && login.Item1)
             {
-                claims.Add(new(ClaimTypes.Name, login.Item2.Nome));
-                claims.Add(new(ClaimTypes.Sid, login.Item2.Id.ToString()));
-
-                ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
-
-                ClaimsPrincipal principalAdm = new(identidadeDoUsuarioAdmn);
+                ClaimsPrincipal principalAdm = _loginService.ConfigurarCookies(login);
 
                 await HttpContext.SignInAsync("CookieAuthentication", principalAdm, new AuthenticationProperties());
 
-                var participantes = await _bancoDeDadosService.ListarParticipantes();
+                var participantes = await _participanteRepository.ListarParticipantes();
 
                 return View("Admin", participantes);
             }
 
-            claims.Add(new(ClaimTypes.Name, login.Item2.Nome));
-            claims.Add(new(ClaimTypes.Sid, login.Item2.Id.ToString()));
-
-            ClaimsIdentity identidadeDoUsuario = new(claims, "Acesso");
-
-            ClaimsPrincipal principal = new(identidadeDoUsuario);
+            ClaimsPrincipal principal = _loginService.ConfigurarCookies(login);
 
             await HttpContext.SignInAsync("CookieAuthentication", principal, new AuthenticationProperties());
 

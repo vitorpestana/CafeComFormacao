@@ -1,6 +1,7 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Services;
-using Microsoft.EntityFrameworkCore;
+using CafeComFormacao.Repositories;
+using CafeComFormacao.Interfaces;
 
 namespace CafeComFormacao
 {
@@ -27,8 +28,11 @@ namespace CafeComFormacao
 
             services.AddControllersWithViews();
 
-            services.AddScoped<BancoDeDadosService>();
-            services.AddScoped<LoginService>();
+            services.AddScoped<IEventoRepository, EventoRepository>();
+            services.AddScoped<IParticipanteRepository, ParticipanteRepository>();
+            services.AddScoped<IViewsModelsRepository, ViewsModelsRepository>();
+            services.AddScoped<ILoginService, LoginService>();
+
         }
 
         public void Configure(WebApplication app, IWebHostEnvironment enviroment)

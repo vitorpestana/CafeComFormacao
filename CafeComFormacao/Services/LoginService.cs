@@ -1,29 +1,37 @@
-﻿using CafeComFormacao.Data;
+﻿using CafeComFormacao.Interfaces;
 using CafeComFormacao.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CafeComFormacao.Services
 {
-    public class LoginService
+    public class LoginService : ILoginService
     {
+        private readonly IParticipanteRepository _participanteRepository;
 
-        private readonly CafeComFormacaoContext _context;
-
-        public LoginService(CafeComFormacaoContext context)
+        public LoginService(IParticipanteRepository participanteRepository)
         {
-            _context = context;
+            _participanteRepository = participanteRepository;
         }
 
         public async Task<(bool, Participante)> VerificarUsuario(string usuario, string senha)
         {
-            Participante participante = await _context.Participante.Where(x => x.Nome.Trim() == usuario && x.Senha.Trim() == senha).FirstOrDefaultAsync();
+            Participante participante = await _participanteRepository.VerificarCredenciais(usuario, senha);
 
             return (participante.Admin, participante);
         }
-        
-        public async Task<bool> VerificarSeEhAdmin(string usuario, string senha)
+
+        public ClaimsPrincipal ConfigurarCookies((bool, Participante) login)
         {
-            var ehAdmin = await _context.Participante.Where(x => x.Nome.Trim() == usuario && x.Senha.Trim() == senha && x.Admin == true).ToListAsync();
-            return ehAdmin.Any();
+            List<Claim> claims = new();
+
+            claims.Add(new(ClaimTypes.Name, login.Item2.Nome));
+            claims.Add(new(ClaimTypes.Sid, login.Item2.Id.ToString()));
+
+            ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
+
+            return new ClaimsPrincipal(identidadeDoUsuarioAdmn);
         }
     }
 }
