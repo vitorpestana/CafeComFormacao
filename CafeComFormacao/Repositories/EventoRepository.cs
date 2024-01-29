@@ -33,12 +33,12 @@ namespace CafeComFormacao.Repositories
             _context.SaveChanges();
         }
 
-        public async Task<List<Evento>> ListarEventosDoUsuario(int usuarioId)
+        public async Task<List<Evento>> ListarEventosDoUsuario(int participanteId)
         {
 
             return await (from Evento evento in _context.Evento
                           join UsuarioEvento usuarioEvento in _context.UsuarioEvento on evento.Id equals usuarioEvento.EventoId
-                          where usuarioEvento.ParticipanteId == usuarioId
+                          where usuarioEvento.ParticipanteId == participanteId
                           select evento).ToListAsync();
         }
 

@@ -29,30 +29,31 @@ namespace CafeComFormacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logar(string usuario, string senha)
         {
-            (bool, Participante) login = await _loginService.VerificarUsuario(usuario.Trim(), senha.Trim());
+            CredenciaisAdm loginAdm = await _loginService.VerificarAdm(usuario, senha);
 
-            if (login.Item2 == null) 
+            if (loginAdm != null)
+            {
+                ClaimsPrincipal principalAdm = _loginService.ConfigurarCookiesAdm(loginAdm);
+
+                await HttpContext.SignInAsync("CookieAuthentication", principalAdm, new AuthenticationProperties());
+
+                return View("Admin");
+            }
+
+            CredenciaisParticipante loginParticipante = await _loginService.VerificarParticipante(usuario.Trim(), senha.Trim());
+
+            if (loginParticipante == null) 
             {
                 ViewBag.Aviso = "Usuário ou senha incorretos!";
                 
                 return View("Index");
-            }else 
-            if(login.Item2 != null && login.Item1)
-            {
-                ClaimsPrincipal principalAdm = _loginService.ConfigurarCookies(login);
-
-                await HttpContext.SignInAsync("CookieAuthentication", principalAdm, new AuthenticationProperties());
-
-                var participantes = await _participanteRepository.ListarParticipantes();
-
-                return View("Admin", participantes);
             }
 
-            ClaimsPrincipal principal = _loginService.ConfigurarCookies(login);
+            ClaimsPrincipal principal = _loginService.ConfigurarCookiesParticipante(loginParticipante);
 
             await HttpContext.SignInAsync("CookieAuthentication", principal, new AuthenticationProperties());
 
-            return View("Usuario");
+            return View("Participante");
         }
     }
 }

@@ -8,9 +8,10 @@
     <table class="table table-bordered table-hover table-dark">
         <thead>
             <tr>
-                <th scope="col">Nome</th>
-                <th scope="col">Data</th>
-                <th scope="col">Horário</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.NomeDoEvento)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.DataDoEvento)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.HoraDoEvento)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.ValorDoEvento)</th>
             </tr>
         </thead>
         <tbody>
@@ -20,6 +21,7 @@
                     <td>@evento.NomeDoEvento</td>
                     <td>@evento.DataDoEvento.ToString("dd/MM/yyyy")</td>
                     <td>@evento.HoraDoEvento</td>
+                    <td>@evento.ValorDoEvento</td>
                 </tr>
             }
         </tbody>

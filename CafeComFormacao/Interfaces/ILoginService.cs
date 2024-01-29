@@ -5,7 +5,9 @@ namespace CafeComFormacao.Interfaces
 {
     public interface ILoginService
     {
-        Task<(bool, Participante)> VerificarUsuario(string usuario, string senha);
-        ClaimsPrincipal ConfigurarCookies((bool, Participante) login);
+        Task<CredenciaisParticipante> VerificarParticipante(string usuario, string senha);
+        ClaimsPrincipal ConfigurarCookiesAdm(CredenciaisAdm login);
+        ClaimsPrincipal ConfigurarCookiesParticipante(CredenciaisParticipante login);
+        Task<CredenciaisAdm> VerificarAdm(string usuario, string senha);
     }
 }

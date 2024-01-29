@@ -11,12 +11,13 @@
 }
 
 <form asp-controller="Login" asp-action="Logar" method="post">
+    @Html.AntiForgeryToken()
 
-    <label for="Usuario" class="control-label">Nome</label>
-    <input name="Usuario" type ="text" class="form-control">
+    <label for="usuario" class="control-label">Nome</label>
+    <input name="usuario" type ="text" class="form-control">
 
-    <label for="Senha" class="control-label">Senha</label>
-    <input name="Senha" type="password" class="form-control">
+    <label for="senha" class="control-label">Senha</label>
+    <input name="senha" type="password" class="form-control">
 
     <input type="submit" value="Logar" />
 </form>

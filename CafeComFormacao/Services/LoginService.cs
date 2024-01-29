@@ -15,19 +15,35 @@ namespace CafeComFormacao.Services
             _participanteRepository = participanteRepository;
         }
 
-        public async Task<(bool, Participante)> VerificarUsuario(string usuario, string senha)
+        public async Task<CredenciaisParticipante> VerificarParticipante(string usuario, string senha)
         {
-            Participante participante = await _participanteRepository.VerificarCredenciais(usuario, senha);
+            CredenciaisParticipante participante = await _participanteRepository.VerificarCredenciais(usuario, senha);
 
-            return (participante.Admin, participante);
+            return participante;
         }
 
-        public ClaimsPrincipal ConfigurarCookies((bool, Participante) login)
+        public async Task<CredenciaisAdm> VerificarAdm(string usuario, string senha)
+        {
+            return await _participanteRepository.VerificarSeEhAdm(usuario, senha);
+        }
+
+        public ClaimsPrincipal ConfigurarCookiesParticipante(CredenciaisParticipante login)
         {
             List<Claim> claims = new();
 
-            claims.Add(new(ClaimTypes.Name, login.Item2.Nome));
-            claims.Add(new(ClaimTypes.Sid, login.Item2.Id.ToString()));
+            claims.Add(new(ClaimTypes.Name, login.LoginEmail));
+            claims.Add(new(ClaimTypes.Sid, login.Id.ToString()));
+
+            ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
+
+            return new ClaimsPrincipal(identidadeDoUsuarioAdmn);
+        }
+        public ClaimsPrincipal ConfigurarCookiesAdm(CredenciaisAdm login)
+        {
+            List<Claim> claims = new();
+
+            claims.Add(new(ClaimTypes.Name, login.LoginEmail));
+            claims.Add(new(ClaimTypes.Sid, login.Id.ToString()));
 
             ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
 

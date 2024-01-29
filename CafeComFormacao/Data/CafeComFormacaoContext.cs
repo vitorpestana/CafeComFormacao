@@ -17,5 +17,7 @@ namespace CafeComFormacao.Data
         public DbSet<CafeComFormacao.Models.Participante> Participante { get; set; } = default!;
         public DbSet<CafeComFormacao.Models.Evento> Evento { get; set; } = default!;
         public DbSet<CafeComFormacao.Models.UsuarioEvento> UsuarioEvento { get; set; } = default!;
+        public DbSet<CafeComFormacao.Models.CredenciaisParticipante> CredenciaisParticipante { get; set; } = default!;
+        public DbSet<CafeComFormacao.Models.CredenciaisAdm> CredenciaisAdm { get; set; } = default!;
     }
 }
