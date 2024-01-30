@@ -1,4 +1,6 @@
-﻿namespace CafeComFormacao.Models
+﻿using CafeComFormacao.Interfaces.Services;
+
+namespace CafeComFormacao.Models
 {
     public class CredenciaisParticipante
     {

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using CafeComFormacao.Interfaces.Repositories;
 using CafeComFormacao.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CafeComFormacao.Controllers
 {
@@ -28,7 +29,7 @@ namespace CafeComFormacao.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logar(string usuario, string senha)
+        public async Task<IActionResult> Logar(string usuario, string senha, bool lembrar)
         {
             CredenciaisAdm loginAdm = await _loginService.VerificarAdm(usuario, senha);
 
@@ -36,9 +37,12 @@ namespace CafeComFormacao.Controllers
             {
                 ClaimsPrincipal principalAdm = _loginService.ConfigurarCookiesAdm(loginAdm);
 
-                await HttpContext.SignInAsync("CookieAuthentication", principalAdm, new AuthenticationProperties());
+                await HttpContext.SignInAsync("CookieAuthentication", principalAdm, new AuthenticationProperties()
+                {
+                    IsPersistent = lembrar
+                });
 
-                return View("Admin");
+                return RedirectToAction("Admin", "Login");
             }
 
             CredenciaisParticipante loginParticipante = await _loginService.VerificarParticipante(usuario.Trim(), senha.Trim());
@@ -52,9 +56,39 @@ namespace CafeComFormacao.Controllers
 
             ClaimsPrincipal principal = _loginService.ConfigurarCookiesParticipante(loginParticipante);
 
-            await HttpContext.SignInAsync("CookieAuthentication", principal, new AuthenticationProperties());
+            await HttpContext.SignInAsync("CookieAuthentication", principal, new AuthenticationProperties()
+            {
+                IsPersistent = lembrar
+            });
 
-            return View("Participante");
+            return RedirectToAction("Participante", "Login");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync("CookieAuthentication", new AuthenticationProperties
+            {
+                IsPersistent = false
+            });
+
+            foreach (var cookie in Request.Cookies.Keys)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize(AuthenticationSchemes = "CookieAuthentication")]
+        public IActionResult Admin()
+        {
+            return View();
+        }
+
+        [Authorize(AuthenticationSchemes = "CookieAuthentication")]
+        public IActionResult Participante()
+        {
+            return View();
         }
     }
 }

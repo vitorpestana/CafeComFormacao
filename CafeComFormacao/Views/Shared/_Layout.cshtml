@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,12 +34,33 @@
                     <div class="container-fluid">
                         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                             <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Participante" asp-action="Cadastro">Cadastro</a>
-                                </li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    if (User.FindFirstValue(ClaimTypes.Actor) == "Admin")
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Admin">Painel</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Participante">Painel</a>
+                                        </li>
+                                    }
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Participante" asp-action="Cadastro">Cadastro</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -51,7 +74,7 @@
         </main>
     </div>
 
-     @if (ViewBag.MostrarCabecalho != false)
+    @if (ViewBag.MostrarCabecalho != false)
     {
         <footer class="border-top footer text-muted">
             <div class="container">

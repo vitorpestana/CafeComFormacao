@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 namespace CafeComFormacao.Controllers
 {
-    [Authorize(AuthenticationSchemes = "CookieAuthentication")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

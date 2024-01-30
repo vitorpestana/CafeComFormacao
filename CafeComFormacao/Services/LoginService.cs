@@ -32,6 +32,7 @@ namespace CafeComFormacao.Services
 
             claims.Add(new(ClaimTypes.Name, login.LoginEmail));
             claims.Add(new(ClaimTypes.Sid, login.Id.ToString()));
+            claims.Add(new(ClaimTypes.Actor, "Usuário"));
 
             ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
 
@@ -43,6 +44,7 @@ namespace CafeComFormacao.Services
 
             claims.Add(new(ClaimTypes.Name, login.LoginEmail));
             claims.Add(new(ClaimTypes.Sid, login.Id.ToString()));
+            claims.Add(new(ClaimTypes.Actor, "Admin"));
 
             ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
 

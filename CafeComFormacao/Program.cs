@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using CafeComFormacao.Data;
-using CafeComFormacao;
+﻿using CafeComFormacao;
 
 var builder = WebApplication.CreateBuilder(args);
 

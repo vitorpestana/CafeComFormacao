@@ -1,5 +1,4 @@
-﻿using CafeComFormacao.Interfaces.Repositories;
-using CafeComFormacao.Interfaces.Services;
+﻿using CafeComFormacao.Interfaces.Services;
 using CafeComFormacao.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -8,12 +7,10 @@ namespace CafeComFormacao.Controllers
 {
     public class ParticipanteController : Controller
     {
-        private readonly IEventoRepository _eventoRepository;
         private readonly IParticipanteService _participanteService;
 
-        public ParticipanteController(IEventoRepository eventoRepository, IParticipanteService participanteService)
+        public ParticipanteController(IParticipanteService participanteService)
         {
-            _eventoRepository = eventoRepository;
             _participanteService = participanteService;
         }
 

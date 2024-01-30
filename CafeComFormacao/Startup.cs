@@ -18,13 +18,16 @@ namespace CafeComFormacao
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CafeComFormacaoContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("CafeComFormacaoContext"), new MySqlServerVersion(new Version(8, 0, 35)), builder =>
-                builder.MigrationsAssembly("CafeComFormacao")));
+                                                                    options.UseMySql(Configuration.GetConnectionString("CafeComFormacaoContext"), 
+                                                                    new MySqlServerVersion(new Version(8, 0, 35)), 
+                                                                    builder =>
+                                                                              builder.MigrationsAssembly("CafeComFormacao")));
 
             services.AddAuthentication("CookieAuthentication").AddCookie("CookieAuthentication", option =>
             {
                 option.LoginPath = "/Login/Index";
                 option.AccessDeniedPath = "/Login/Ops";
+                option.ExpireTimeSpan = TimeSpan.FromHours(1);
             });
 
             services.AddControllersWithViews();
