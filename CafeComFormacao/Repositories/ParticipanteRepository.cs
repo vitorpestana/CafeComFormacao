@@ -8,12 +8,10 @@ namespace CafeComFormacao.Repositories
     public class ParticipanteRepository : IParticipanteRepository
     {
         private readonly CafeComFormacaoContext _context;
-        private readonly IEventoRepository _eventoRepository;
 
-        public ParticipanteRepository(CafeComFormacaoContext context, IEventoRepository eventoRepository)
+        public ParticipanteRepository(CafeComFormacaoContext context)
         {
             _context = context;
-            _eventoRepository = eventoRepository;
         }
 
         public async Task<Participante> Inserir(Cadastro participante)
