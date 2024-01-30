@@ -1,4 +1,5 @@
-﻿using CafeComFormacao.Interfaces;
+﻿using CafeComFormacao.Interfaces.Repositories;
+using CafeComFormacao.Interfaces.Services;
 using CafeComFormacao.Models;
 
 namespace CafeComFormacao.Services

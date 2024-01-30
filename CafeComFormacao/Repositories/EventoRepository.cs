@@ -1,6 +1,6 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Models;
-using CafeComFormacao.Interfaces;
+using CafeComFormacao.Interfaces.Repositories;
 
 namespace CafeComFormacao.Repositories
 {

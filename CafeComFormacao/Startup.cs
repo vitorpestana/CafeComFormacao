@@ -1,7 +1,8 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Services;
 using CafeComFormacao.Repositories;
-using CafeComFormacao.Interfaces;
+using CafeComFormacao.Interfaces.Repositories;
+using CafeComFormacao.Interfaces.Services;
 
 namespace CafeComFormacao
 {

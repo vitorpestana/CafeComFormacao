@@ -1,6 +1,6 @@
 ﻿using CafeComFormacao.Models;
 
-namespace CafeComFormacao.Interfaces
+namespace CafeComFormacao.Interfaces.Services
 {
     public interface IEventoService
     {

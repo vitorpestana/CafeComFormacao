@@ -1,9 +1,10 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Models;
-using CafeComFormacao.Interfaces;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using CafeComFormacao.Interfaces.Repositories;
+using CafeComFormacao.Interfaces.Services;
 
 namespace CafeComFormacao.Controllers
 {

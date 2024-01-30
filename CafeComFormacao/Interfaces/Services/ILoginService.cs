@@ -1,7 +1,7 @@
 ﻿using CafeComFormacao.Models;
 using System.Security.Claims;
 
-namespace CafeComFormacao.Interfaces
+namespace CafeComFormacao.Interfaces.Services
 {
     public interface ILoginService
     {

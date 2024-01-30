@@ -1,7 +1,7 @@
 ﻿using CafeComFormacao.Models;
 using System.Threading.Tasks;
 
-namespace CafeComFormacao.Interfaces
+namespace CafeComFormacao.Interfaces.Repositories
 {
     public interface IViewsModelsRepository
     {
