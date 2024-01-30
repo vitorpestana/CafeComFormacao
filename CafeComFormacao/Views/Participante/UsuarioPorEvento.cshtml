@@ -3,33 +3,32 @@
 
     ViewData["Title"] = "Inscritos";
 
-    var ParticipantesPorEvento = ViewData["ParticipantesPorEvento"] as Dictionary<Evento, List<Participante>>;
+    var ParticipantesPorEvento = ViewData["ParticipantesPorEvento"] as List<ViewsModels>;
 }
 
 <div class="table-responsive">
-    @foreach (KeyValuePair <Evento, List <Participante>> IdEventoParticipante in ParticipantesPorEvento)
+    @foreach (ViewsModels  viewModel in ParticipantesPorEvento)
     {
-        Evento eventoEmQuestao = IdEventoParticipante.Key;
-        List<Participante> listaParticipantes = IdEventoParticipante.Value;
-
         <div class="container-fluid mt-5 border border-warning">
-            <h1>@eventoEmQuestao.NomeDoEvento</h1>
-            <p class="fs-5">@eventoEmQuestao.DataDoEvento.ToString("dddd"), @eventoEmQuestao.DataDoEvento.ToString("dd") de @eventoEmQuestao.DataDoEvento.ToString("MMMM") de @eventoEmQuestao.DataDoEvento.ToString("yyyy") às @eventoEmQuestao.HoraDoEvento </p>
+            <h1>@viewModel.Evento.NomeDoEvento</h1>
+            <p class="fs-5">@viewModel.Evento.DataDoEvento.ToString("dddd"), @viewModel.Evento.DataDoEvento.ToString("dd") de @viewModel.Evento.DataDoEvento.ToString("MMMM") de @viewModel.Evento.DataDoEvento.ToString("yyyy") às @viewModel.Evento.HoraDoEvento </p>
             <table class="table table-bordered table-hover table-dark">
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
                         <th scope="col">Email</th>
                         <th scope="col">Celular</th>
+                        <th scope="col">Pagamento da Inscrição</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (Participante participante in listaParticipantes)
+                    @foreach (Participante participante in viewModel.ListaDeParticipantes)
                     {
                         <tr>
                             <td>@participante.Nome</td>
                             <td>@participante.Email</td>
                             <td>@participante.Celular</td>
+                            <td>@viewModel.StatusPagamento</td>
                         </tr>
                     }
                 </tbody>

@@ -10,6 +10,7 @@ namespace CafeComFormacao.Controllers
         private readonly IParticipanteRepository _participanteRepository;
         private readonly IEventoRepository _eventoRepository;
         private readonly IViewsModelsRepository _viewsModelsRepository;
+        private readonly IViewsModelsService _viewModelsService;
 
         public ParticipanteController(IParticipanteRepository participanteRepository, IEventoRepository eventoRepository, IViewsModelsRepository viewsModelsRepository)
         {
@@ -57,9 +58,9 @@ namespace CafeComFormacao.Controllers
 
         public async Task<IActionResult> UsuarioPorEvento()
         {
-            ViewsModels viewsModels = await _viewsModelsRepository.PrepararParticipantesPorEventoViewsModels();
+            List<ViewsModels> viewsModels = await _viewsModelsRepository.PrepararParticipantesPorEventoViewsModels();
 
-            ViewData["ParticipantesPorEvento"] = viewsModels.ParticipantesPorEvento;
+            ViewData["ParticipantesPorEvento"] = viewsModels;
 
             return View("UsuarioPorEvento");
         }

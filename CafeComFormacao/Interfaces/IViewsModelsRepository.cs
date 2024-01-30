@@ -1,11 +1,11 @@
 ﻿using CafeComFormacao.Models;
+using System.Threading.Tasks;
 
 namespace CafeComFormacao.Interfaces
 {
     public interface IViewsModelsRepository
     {
-        Task<ViewsModels> PrepararTudoViewsModels();
-        Task<ViewsModels> PrepararParticipantesPorEventoViewsModels();
+        Task<List<ViewsModels>> PrepararParticipantesPorEventoViewsModels();
         Task<List<int>> ObterIdsDosEventos();
     }
 }

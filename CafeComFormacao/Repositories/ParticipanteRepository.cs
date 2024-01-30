@@ -62,24 +62,6 @@ namespace CafeComFormacao.Repositories
 
         }
 
-        public async Task<Dictionary<Evento, List<Participante>>> ListarCadaParticipantePorEvento(List<int> eventosIds)
-        {
-            Dictionary<Evento, List<Participante>> usuariosPorEvento = new();
-
-            foreach (int idEvento in eventosIds)
-            {
-                usuariosPorEvento.Add(await _eventoRepository.EventoDaListaDeParticipantes(idEvento), await ListarUsuariosPorEvento(idEvento));
-            }
-
-            List<Evento> listaARemover = usuariosPorEvento.Where(listaParticipante => listaParticipante.Value.Count == 0).Select(parChaveValor => parChaveValor.Key).ToList();
-            foreach (Evento chave in listaARemover)
-            {
-                usuariosPorEvento.Remove(chave);
-            };
-
-            return usuariosPorEvento;
-        }
-
         public async Task<CredenciaisParticipante> VerificarCredenciais(string usuario, string senha)
         {
             return await _context.CredenciaisParticipante.Where(x => x.LoginEmail.Trim() == usuario && x.Senha.Trim() == senha).FirstOrDefaultAsync();
@@ -93,6 +75,13 @@ namespace CafeComFormacao.Repositories
         public async Task<int> ObterIdDoParticipante(Participante participante)
         {
             return await _context.Participante.Where(y => y.Email.Trim() == participante.Email.Trim() && participante.Id == y.Id).Select(x => x.Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<StatusPagamento> ObterStatusPagamento(int idParticipante, int idEvento)
+        {
+            return await (from UsuarioEvento usuarioEvento in _context.UsuarioEvento
+                          where usuarioEvento.ParticipanteId == idParticipante && usuarioEvento.EventoId == idEvento
+                          select usuarioEvento.PagamentoStatus).FirstOrDefaultAsync();
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using CafeComFormacao.Interfaces;
 using CafeComFormacao.Models;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace CafeComFormacao.Services

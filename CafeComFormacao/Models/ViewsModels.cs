@@ -3,9 +3,10 @@
     [NotMapped]
     public class ViewsModels
     {
-        public IEnumerable<Evento> Eventos { get; set; }
-        public IEnumerable<Participante> Participantes { get; set; }
-        public Dictionary<Evento, List<Participante>> ParticipantesPorEvento { get; set; }
-        public IEnumerable<UsuarioEvento> UsuarioEventos { get; set;}
+        public List<Evento> ListaDeEventos { get; set; }
+        public List<Participante> ListaDeParticipantes { get; set; }
+        public List<UsuarioEvento> ListaDeUsuarioEventos { get; set;}
+        public Evento Evento { get; set; }
+        public string StatusPagamento { get; set; }
     }
 }

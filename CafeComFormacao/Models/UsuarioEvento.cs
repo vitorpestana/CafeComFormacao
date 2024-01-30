@@ -13,10 +13,17 @@
         public int EventoId { get; set; }
         public Evento Evento { get; set; }
 
+        public StatusPagamento PagamentoStatus { get; set; } = StatusPagamento.Pendente;
+
         public UsuarioEvento(int participanteId, int eventoId) 
         {
             EventoId = eventoId;
             ParticipanteId = participanteId;
         }
+    }
+    public enum StatusPagamento
+    {
+        Pendente,
+        Pago
     }
 }
