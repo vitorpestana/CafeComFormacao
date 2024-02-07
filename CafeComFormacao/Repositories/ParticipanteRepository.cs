@@ -14,15 +14,8 @@ namespace CafeComFormacao.Repositories
             _context = context;
         }
 
-        public async Task<Participante> Inserir(Cadastro participante)
+        public async Task InserirParticipante(Cadastro participante)
         {
-            _context.CredenciaisParticipante.Add(new CredenciaisParticipante()
-            {
-                Id = participante.ParticipanteId,
-                LoginEmail = participante.Email,
-                Senha = participante.Senha
-            });
-
             Participante participanteCadastrado = new()
             {
                 Id = participante.ParticipanteId,
@@ -35,8 +28,20 @@ namespace CafeComFormacao.Repositories
             _context.Participante.Add(participanteCadastrado);
 
             await  _context.SaveChangesAsync();
+        }
 
-            return participanteCadastrado;
+        public async Task InserirCredenciais(Cadastro participante)
+        {
+            CredenciaisParticipante credenciaisParticipante = new()
+            {
+                Id = participante.ParticipanteId,
+                LoginEmail = participante.Email,
+                Senha = participante.Senha
+            };
+
+            _context.CredenciaisParticipante.Add(credenciaisParticipante);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task<List<Participante>> ListarParticipantes()

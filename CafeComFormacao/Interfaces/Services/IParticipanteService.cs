@@ -8,5 +8,6 @@ namespace CafeComFormacao.Interfaces.Services
         void InscreverEventoService(List<int> eventosSelecionados, int idUsuario);
         Task<List<Evento>> SelecaoEventoService();
         Task<List<ViewsModels>> UsuarioPorEventoService();
+        Task<List<Participante>> ListarParcipantesService();
     }
 }

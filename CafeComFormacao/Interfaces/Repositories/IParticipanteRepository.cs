@@ -4,7 +4,8 @@ namespace CafeComFormacao.Interfaces.Repositories
 {
     public interface IParticipanteRepository
     {
-        Task<Participante> Inserir(Cadastro participante);
+        Task InserirParticipante(Cadastro participante);
+        Task InserirCredenciais(Cadastro participante);
         Task<List<Participante>> ListarParticipantes();
         Task<List<UsuarioEvento>> ListarRelacionamentoParticipanteEvento();
         Task<List<Participante>> ListarUsuariosPorEvento(int eventoId);

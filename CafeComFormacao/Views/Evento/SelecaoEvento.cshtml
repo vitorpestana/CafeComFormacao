@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<CafeComFormacao.Models.Evento>
 
+@{
+    ViewBag.MostrarCabecalho = false;
+}
+
 <form asp-controller="Participante" asp-action="InscreverEvento" method="post">
     <div class="form-group">
         <select class="form-control custom-select multiple" name="EventosSelecionados">

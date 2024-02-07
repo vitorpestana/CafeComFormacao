@@ -2,6 +2,7 @@
 using CafeComFormacao.Interfaces.Services;
 using CafeComFormacao.Models;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace CafeComFormacao.Services
 {
@@ -14,37 +15,44 @@ namespace CafeComFormacao.Services
             _participanteRepository = participanteRepository;
         }
 
-        public async Task<CredenciaisParticipante> VerificarParticipante(string usuario, string senha)
+        public async Task<object> VerificarCredenciais(string usuario, string senha)
         {
-            CredenciaisParticipante participante = await _participanteRepository.VerificarCredenciais(usuario, senha);
+            object login = await _participanteRepository.VerificarSeEhAdm(usuario, senha);
 
-            return participante;
+            login ??= await _participanteRepository.VerificarCredenciais(usuario, senha);
+
+            return login;
         }
 
-        public async Task<CredenciaisAdm> VerificarAdm(string usuario, string senha)
+        public ClaimsPrincipal ConfigurarCookies<T>(T login) where T : class
         {
-            return await _participanteRepository.VerificarSeEhAdm(usuario, senha);
-        }
+            if (login == null)
+            {
+                throw new ArgumentException("Erro!");
+            }
 
-        public ClaimsPrincipal ConfigurarCookiesParticipante(CredenciaisParticipante login)
-        {
             List<Claim> claims = new();
 
-            claims.Add(new(ClaimTypes.Name, login.LoginEmail));
-            claims.Add(new(ClaimTypes.Sid, login.Id.ToString()));
-            claims.Add(new(ClaimTypes.Actor, "Usuário"));
+            if (login is CredenciaisAdm)
+            {
+                CredenciaisAdm loginAdm = login as CredenciaisAdm;
 
-            ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
+                claims.Add(new(ClaimTypes.Name, loginAdm.LoginEmail));
+                claims.Add(new(ClaimTypes.Sid, loginAdm.Id.ToString()));
+                claims.Add(new(ClaimTypes.Actor, "Admin"));
+            }else
+            if (login is CredenciaisParticipante)
+            {
+                CredenciaisParticipante loginParticipante = login as CredenciaisParticipante;
 
-            return new ClaimsPrincipal(identidadeDoUsuarioAdmn);
-        }
-        public ClaimsPrincipal ConfigurarCookiesAdm(CredenciaisAdm login)
-        {
-            List<Claim> claims = new();
-
-            claims.Add(new(ClaimTypes.Name, login.LoginEmail));
-            claims.Add(new(ClaimTypes.Sid, login.Id.ToString()));
-            claims.Add(new(ClaimTypes.Actor, "Admin"));
+                claims.Add(new(ClaimTypes.Name, loginParticipante.LoginEmail));
+                claims.Add(new(ClaimTypes.Sid, loginParticipante.Id.ToString()));
+                claims.Add(new(ClaimTypes.Actor, "Usuário"));
+            }
+            else
+            {
+                throw new ArgumentException("Erro!");
+            }
 
             ClaimsIdentity identidadeDoUsuarioAdmn = new(claims, "Acesso");
 

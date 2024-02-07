@@ -48,7 +48,7 @@ namespace CafeComFormacao.Controllers
 
         public async Task<IActionResult> ListarParticipantes()
         {
-            List<Evento> participantes = await _participanteService.SelecaoEventoService();
+            List<Participante> participantes = await _participanteService.ListarParcipantesService();
 
             return View("ListarParticipantes", participantes);
         }
@@ -57,9 +57,7 @@ namespace CafeComFormacao.Controllers
         {
             List<ViewsModels> viewsModels = await _participanteService.UsuarioPorEventoService();
 
-            ViewData["ParticipantesPorEvento"] = viewsModels;
-
-            return View("UsuarioPorEvento");
+            return View("UsuarioPorEvento", viewsModels);
         }
 
     }

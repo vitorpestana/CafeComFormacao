@@ -31,37 +31,25 @@ namespace CafeComFormacao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logar(string usuario, string senha, bool lembrar)
         {
-            CredenciaisAdm loginAdm = await _loginService.VerificarAdm(usuario, senha);
+            object login = await _loginService.VerificarCredenciais(usuario, senha);
 
-            if (loginAdm != null)
+            if (login == null) 
             {
-                ClaimsPrincipal principalAdm = _loginService.ConfigurarCookiesAdm(loginAdm);
-
-                await HttpContext.SignInAsync("CookieAuthentication", principalAdm, new AuthenticationProperties()
-                {
-                    IsPersistent = lembrar
-                });
-
-                return RedirectToAction("Admin", "Login");
-            }
-
-            CredenciaisParticipante loginParticipante = await _loginService.VerificarParticipante(usuario.Trim(), senha.Trim());
-
-            if (loginParticipante == null) 
-            {
-                ViewBag.Aviso = "Usuário ou senha incorretos!";
+                ViewBag.Aviso = "Credenciais incorretas!";
                 
                 return View("Index");
             }
 
-            ClaimsPrincipal principal = _loginService.ConfigurarCookiesParticipante(loginParticipante);
+            string view = login.GetType() == typeof(CredenciaisAdm) ? "Admin" : "Participante";
+
+            ClaimsPrincipal principal = _loginService.ConfigurarCookies(login);
 
             await HttpContext.SignInAsync("CookieAuthentication", principal, new AuthenticationProperties()
             {
                 IsPersistent = lembrar
             });
 
-            return RedirectToAction("Participante", "Login");
+            return RedirectToAction(view, "Login");
         }
 
         public async Task<IActionResult> Logout()

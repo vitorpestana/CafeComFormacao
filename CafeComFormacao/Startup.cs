@@ -3,6 +3,7 @@ using CafeComFormacao.Services;
 using CafeComFormacao.Repositories;
 using CafeComFormacao.Interfaces.Repositories;
 using CafeComFormacao.Interfaces.Services;
+using CafeComFormacao.Interfaces.Util;
 
 namespace CafeComFormacao
 {
@@ -32,6 +33,7 @@ namespace CafeComFormacao
 
             services.AddControllersWithViews();
 
+            services.AddScoped<IHashService, HashService>();
             services.AddScoped<IEventoRepository, EventoRepository>();
             services.AddScoped<IParticipanteRepository, ParticipanteRepository>();
             services.AddScoped<IViewsModelsService, ViewsModelsService>();

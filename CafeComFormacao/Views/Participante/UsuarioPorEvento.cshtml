@@ -2,12 +2,10 @@
     ViewBag.MostrarCabecalho = false;
 
     ViewData["Title"] = "Inscritos";
-
-    var ParticipantesPorEvento = ViewData["ParticipantesPorEvento"] as List<ViewsModels>;
 }
 
 <div class="table-responsive">
-    @foreach (ViewsModels  viewModel in ParticipantesPorEvento)
+    @foreach (ViewsModels  viewModel in Model)
     {
         <div class="container-fluid mt-5 border border-warning">
             <h1>@viewModel.Evento.NomeDoEvento</h1>
