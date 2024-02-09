@@ -7,37 +7,35 @@ namespace CafeComFormacao.Services
     {
         private static RandomNumberGenerator rng = RandomNumberGenerator.Create();
 
-        private static string CriarSal(int size)
+        private static string CriarSal(int tamanho)
         {
-            byte[] buff = new byte[size];
+            byte[] buff = new byte[tamanho];
 
             rng.GetBytes(buff);
 
             return Convert.ToBase64String(buff);
         }
 
-        public string GerarHashSHA256(string credencial, string sal)
+        public string GerarHashSHA256(string credencial, string sal = "")
         {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(credencial + sal);
-
             SHA256Managed sha256HashString = new();
+
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(credencial);
 
             byte[] hash = sha256HashString.ComputeHash(bytes);
 
-            return Convert.ToBase64String(hash);
+            string hashBase64 = Convert.ToBase64String(hash);
+
+            return !string.IsNullOrEmpty(sal) ? sal + hashBase64 : hashBase64; ;
         }
 
-        public (string, string) GerarCredenciaisSeguras(string usuario, string senha)
+        public string GerarCredenciaisSeguras(string senha)
         {
-            string salSenha = CriarSal(11);
+            string salSenha = CriarSal(16);
 
             string senhaSegura = GerarHashSHA256(senha, salSenha);
 
-            string salUsuario = CriarSal(11);
-
-            string usuarioSeguro = GerarHashSHA256(usuario, salUsuario);
-
-            return (usuarioSeguro, senhaSegura);
+            return senhaSegura;
         }
     }
 }

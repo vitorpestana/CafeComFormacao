@@ -2,7 +2,7 @@
 {
     public interface IHashService
     {
-        string GerarHashSHA256(string credencial, string sal);
-        (string, string) GerarCredenciaisSeguras(string usuario, string senha);
+        string GerarHashSHA256(string credencial, string sal = "");
+        string GerarCredenciaisSeguras(string senha);
     }
 }

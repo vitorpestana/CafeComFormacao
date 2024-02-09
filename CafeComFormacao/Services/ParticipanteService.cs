@@ -24,13 +24,11 @@ namespace CafeComFormacao.Services
         {
             await _participanteRepository.InserirParticipante(participante);
 
-            (string usuarioSeguro, string senhaSegura) credenciaisSeguras = _hashService.GerarCredenciaisSeguras(participante.Email, participante.Senha);
+            string senhaSegura = _hashService.GerarCredenciaisSeguras(participante.Senha);
 
-            participante.Email = credenciaisSeguras.usuarioSeguro;
-            participante.Senha = credenciaisSeguras.senhaSegura;
+            participante.Senha = senhaSegura;
 
             await _participanteRepository.InserirCredenciais(participante);
-
         }
 
         public void InscreverEventoService(List<int> eventosSelecionados, int idUsuario)
@@ -43,9 +41,9 @@ namespace CafeComFormacao.Services
             return await _eventoRepository.ListarEventos();
         }
 
-        public Task<List<ViewsModels>> UsuarioPorEventoService()
+        public async Task<List<ViewsModels>> UsuarioPorEventoService()
         {
-            return _viewsModelsRepository.PrepararParticipantesPorEventoViewsModels();
+            return await _viewsModelsRepository.PrepararParticipantesPorEventoViewsModels();
         }
 
         public async Task<List<Participante>> ListarParcipantesService()
@@ -53,5 +51,14 @@ namespace CafeComFormacao.Services
             return await _participanteRepository.ListarParticipantes();
         }
 
+        public async Task<bool> VerificarExistenciaEmail(string email)
+        {
+            return await _participanteRepository.VerificarSeOEmailExiste(email);
+        }
+
+        public async Task<bool> VerificarExistenciaCelular(string celular)
+        {
+            return await _participanteRepository.VerificarSeOCelularExiste(celular);
+        }
     }
 }

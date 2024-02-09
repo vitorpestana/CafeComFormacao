@@ -13,5 +13,7 @@ namespace CafeComFormacao.Interfaces.Repositories
         Task<CredenciaisAdm> VerificarSeEhAdm(string usuario, string senha);
         Task<int> ObterIdDoParticipante(Participante participante);
         Task<StatusPagamento> ObterStatusPagamento(int idEvento, int idParticipante);
+        Task<bool> VerificarSeOEmailExiste(string email);
+        Task<bool> VerificarSeOCelularExiste(string celular);
     }
 }

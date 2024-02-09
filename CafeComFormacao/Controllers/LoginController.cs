@@ -6,6 +6,7 @@ using System.Security.Claims;
 using CafeComFormacao.Interfaces.Repositories;
 using CafeComFormacao.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
+using CafeComFormacao.Interfaces.Util;
 
 namespace CafeComFormacao.Controllers
 {
@@ -14,12 +15,14 @@ namespace CafeComFormacao.Controllers
         private readonly CafeComFormacaoContext _context;
         private readonly ILoginService _loginService;
         private readonly IParticipanteRepository _participanteRepository;
+        private readonly IHashService _hashService;
 
-        public LoginController(CafeComFormacaoContext context, ILoginService login, IParticipanteRepository participanteRepository)
+        public LoginController(CafeComFormacaoContext context, ILoginService login, IParticipanteRepository participanteRepository, IHashService hashService)
         {
             _context = context;
             _loginService = login;
             _participanteRepository = participanteRepository;
+            _hashService = hashService;
         }
 
         public IActionResult Index()

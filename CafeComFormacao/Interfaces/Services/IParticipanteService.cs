@@ -9,5 +9,7 @@ namespace CafeComFormacao.Interfaces.Services
         Task<List<Evento>> SelecaoEventoService();
         Task<List<ViewsModels>> UsuarioPorEventoService();
         Task<List<Participante>> ListarParcipantesService();
+        Task<bool> VerificarExistenciaEmail(string email);
+        Task<bool> VerificarExistenciaCelular(string celular);
     }
 }

@@ -67,12 +67,12 @@ namespace CafeComFormacao.Repositories
 
         public async Task<CredenciaisParticipante> VerificarCredenciais(string usuario, string senha)
         {
-            return await _context.CredenciaisParticipante.Where(x => x.LoginEmail.Trim() == usuario && x.Senha.Trim() == senha).FirstOrDefaultAsync();
+            return await _context.CredenciaisParticipante.Where(x => x.LoginEmail.Trim() == usuario).FirstOrDefaultAsync();
         }
 
         public async Task<CredenciaisAdm> VerificarSeEhAdm(string usuario, string senha)
         {
-            return await _context.CredenciaisAdm.Where(x => x.LoginEmail.Trim() == usuario && x.Senha.Trim() == senha).FirstOrDefaultAsync();
+            return await _context.CredenciaisAdm.Where(x => x.LoginEmail.Trim() == usuario).FirstOrDefaultAsync();
         }
 
         public async Task<int> ObterIdDoParticipante(Participante participante)
@@ -85,6 +85,16 @@ namespace CafeComFormacao.Repositories
             return await (from UsuarioEvento usuarioEvento in _context.UsuarioEvento
                           where usuarioEvento.ParticipanteId == idParticipante && usuarioEvento.EventoId == idEvento
                           select usuarioEvento.PagamentoStatus).FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> VerificarSeOEmailExiste(string email)
+        {
+            return await _context.CredenciaisParticipante.AnyAsync(x => x.LoginEmail == email);
+        }
+
+        public async Task<bool> VerificarSeOCelularExiste(string celular)
+        {
+            return await _context.Participante.AnyAsync(x => x.Celular == celular);
         }
     }
 }

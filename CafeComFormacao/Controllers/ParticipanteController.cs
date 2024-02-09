@@ -46,6 +46,7 @@ namespace CafeComFormacao.Controllers
             return View("./Views/Evento/SelecaoEvento.cshtml", eventos);
         }
 
+        [HttpGet]
         public async Task<IActionResult> ListarParticipantes()
         {
             List<Participante> participantes = await _participanteService.ListarParcipantesService();
@@ -53,6 +54,7 @@ namespace CafeComFormacao.Controllers
             return View("ListarParticipantes", participantes);
         }
 
+        [HttpGet]
         public async Task<IActionResult> UsuarioPorEvento()
         {
             List<ViewsModels> viewsModels = await _participanteService.UsuarioPorEventoService();
@@ -60,5 +62,16 @@ namespace CafeComFormacao.Controllers
             return View("UsuarioPorEvento", viewsModels);
         }
 
+        [HttpGet]
+        public async Task<bool> VerificarSeOEmailJaExiste(string email)
+        {
+            return await _participanteService.VerificarExistenciaEmail(email);
+        }
+
+        [HttpGet]
+        public async Task<bool> VerificarSeOCelularJaExiste(string celular)
+        {
+            return await _participanteService.VerificarExistenciaCelular(celular);
+        }
     }
 }
