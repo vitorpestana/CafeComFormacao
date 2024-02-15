@@ -28,6 +28,7 @@ namespace CafeComFormacao.Controllers
             return View("./Views/Login/Admin.cshtml");
         }
 
+        [HttpGet]
         public async Task<IActionResult> ListarTodosOsEventosDoUsuario()
         {
             List<Evento> eventosDoUsuario = await _eventoService.ListarTodosOsEventosDoUsuarioService(int.Parse(User.FindFirstValue(ClaimTypes.Sid)));

@@ -22,13 +22,27 @@ namespace CafeComFormacao.Services
 
         public async Task CriarParticipanteService(Cadastro participante)
         {
-            await _participanteRepository.InserirParticipante(participante);
+            Participante participanteCadastro = new()
+            {
+                Id = participante.ParticipanteId,
+                Nome = participante.Nome,
+                Email = participante.Email,
+                Celular = participante.Celular,
+                CursoLidere = participante.CursoLidere
+            };
+
+            await _participanteRepository.InserirParticipante(participanteCadastro);
 
             string senhaSegura = _hashService.GerarCredenciaisSeguras(participante.Senha);
 
-            participante.Senha = senhaSegura;
+            CredenciaisParticipante credenciaisParticipante = new()
+            {
+                Id = participante.ParticipanteId,
+                LoginEmail = participante.Email,
+                Senha = senhaSegura
+            };
 
-            await _participanteRepository.InserirCredenciais(participante);
+            await _participanteRepository.InserirCredenciais(credenciaisParticipante);
         }
 
         public void InscreverEventoService(List<int> eventosSelecionados, int idUsuario)

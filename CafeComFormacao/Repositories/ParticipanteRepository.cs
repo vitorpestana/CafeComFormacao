@@ -14,31 +14,15 @@ namespace CafeComFormacao.Repositories
             _context = context;
         }
 
-        public async Task InserirParticipante(Cadastro participante)
+        public async Task InserirParticipante(Participante participante)
         {
-            Participante participanteCadastrado = new()
-            {
-                Id = participante.ParticipanteId,
-                Nome = participante.Nome,
-                Email = participante.Email,
-                Celular = participante.Celular,
-                CursoLidere = participante.CursoLidere
-            };
-
-            _context.Participante.Add(participanteCadastrado);
+            _context.Participante.Add(participante);
 
             await  _context.SaveChangesAsync();
         }
 
-        public async Task InserirCredenciais(Cadastro participante)
+        public async Task InserirCredenciais(CredenciaisParticipante credenciaisParticipante)
         {
-            CredenciaisParticipante credenciaisParticipante = new()
-            {
-                Id = participante.ParticipanteId,
-                LoginEmail = participante.Email,
-                Senha = participante.Senha
-            };
-
             _context.CredenciaisParticipante.Add(credenciaisParticipante);
 
             await _context.SaveChangesAsync();
