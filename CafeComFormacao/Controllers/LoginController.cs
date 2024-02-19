@@ -38,7 +38,7 @@ namespace CafeComFormacao.Controllers
 
             if (login == null) 
             {
-                ViewBag.Aviso = "Credenciais incorretas!";
+                ViewBag.Aviso = "Pelo menos uma credencial de acesso está errada!";
                 
                 return View("Index");
             }

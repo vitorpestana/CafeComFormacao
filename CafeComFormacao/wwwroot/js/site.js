@@ -58,7 +58,7 @@ function ajaxCadastro()
                     });
 
                     if (response) {
-                        $("#mensagemCelular").text("Este celular já está cadastrado. Por favor, informe outro ou entre em contato com o suporte técnico do café com formação.");
+                        $("#mensagemCelular").text("Este número de contato já está cadastrado. Por favor, informe outro ou entre em contato com o suporte técnico do café com formação.");
                         $botaoEnviar.prop("disabled", true);
                     } else {
                         $("#mensagemCelular").text("");
@@ -69,31 +69,5 @@ function ajaxCadastro()
                 }
             }
         });
-
-        $("#confirmarSenha, #senha").on("input", function ()
-        {
-            clearTimeout(tempo);
-
-            var $senha = $("#senha").val();
-            var $confirmarSenha = $("#confirmarSenha").val();
-            tempo = setTimeout(function () {
-
-                if ($senha !== $confirmarSenha)
-                {
-                    if ($senha !== "") {
-                        $("#mensagemConfirmarSenha").text("A senha não concide com sua confirmação. Por favor, confirme novamente sua senha.");
-                    }
-                    else{
-                        $("#mensagemConfirmarSenha").text("Para validar a confirmação da senha é preciso primeiro preencher o campo senha. Preencha-o para prosseguir.");
-                    }
-                    $botaoEnviar.prop("disabled", true);
-                }
-                else
-                {
-                    $("#mensagemConfirmarSenha").text("");
-                    $botaoEnviar.prop("disabled", false);
-                }
-            }, 500);
-        })
     });
 }

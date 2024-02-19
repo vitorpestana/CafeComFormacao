@@ -9,18 +9,18 @@ namespace CafeComFormacao
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) 
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; set; }
-        
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<CafeComFormacaoContext>(options =>
-                                                                    options.UseMySql(Configuration.GetConnectionString("CafeComFormacaoContext"), 
-                                                                    new MySqlServerVersion(new Version(8, 0, 35)), 
+                                                                    options.UseMySql(Configuration.GetConnectionString("CafeComFormacaoContext"),
+                                                                    new MySqlServerVersion(new Version(8, 0, 35)),
                                                                     builder =>
                                                                               builder.MigrationsAssembly("CafeComFormacao")));
 
@@ -31,9 +31,15 @@ namespace CafeComFormacao
                 option.ExpireTimeSpan = TimeSpan.FromHours(1);
             });
 
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "TokenCSRFDeValidação";
+            });
+
             services.AddControllersWithViews();
 
             services.AddScoped<IHashService, HashService>();
+            services.AddScoped<ISanitizarService, SanitizarService>();
             services.AddScoped<IEventoRepository, EventoRepository>();
             services.AddScoped<IParticipanteRepository, ParticipanteRepository>();
             services.AddScoped<IViewsModelsService, ViewsModelsService>();

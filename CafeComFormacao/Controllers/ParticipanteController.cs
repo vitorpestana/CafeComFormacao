@@ -1,4 +1,5 @@
 ﻿using CafeComFormacao.Interfaces.Services;
+using CafeComFormacao.Interfaces.Util;
 using CafeComFormacao.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -8,10 +9,12 @@ namespace CafeComFormacao.Controllers
     public class ParticipanteController : Controller
     {
         private readonly IParticipanteService _participanteService;
+        private readonly ISanitizarService _sanitizarService;
 
-        public ParticipanteController(IParticipanteService participanteService)
+        public ParticipanteController(IParticipanteService participanteService, ISanitizarService sanitizarService)
         {
             _participanteService = participanteService;
+            _sanitizarService = sanitizarService;
         }
 
         public IActionResult Cadastro()

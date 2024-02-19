@@ -11,13 +11,15 @@ namespace CafeComFormacao.Services
         private readonly IEventoRepository _eventoRepository;
         private readonly IViewsModelsRepository _viewsModelsRepository;
         private readonly IHashService _hashService;
+        private readonly ISanitizarService _sanitizarService;
 
-        public ParticipanteService(IParticipanteRepository participanteRepository, IEventoRepository eventoRepository, IViewsModelsRepository viewsModelsRepository, IHashService hashService)
+        public ParticipanteService(IParticipanteRepository participanteRepository, IEventoRepository eventoRepository, IViewsModelsRepository viewsModelsRepository, IHashService hashService, ISanitizarService sanitizar)
         {
             _participanteRepository = participanteRepository;
             _eventoRepository = eventoRepository;
             _viewsModelsRepository = viewsModelsRepository;
             _hashService = hashService;
+            _sanitizarService = sanitizar;
         }
 
         public async Task CriarParticipanteService(Cadastro participante)
@@ -25,9 +27,9 @@ namespace CafeComFormacao.Services
             Participante participanteCadastro = new()
             {
                 Id = participante.ParticipanteId,
-                Nome = participante.Nome,
-                Email = participante.Email,
-                Celular = participante.Celular,
+                Nome = _sanitizarService.RetirarCaracteresPossivelmenteMaliciosos(participante.Nome),
+                Email = _sanitizarService.RetirarCaracteresPossivelmenteMaliciosos(participante.Email),
+                Celular = _sanitizarService.RetirarCaracteresPossivelmenteMaliciosos(participante.Celular),
                 CursoLidere = participante.CursoLidere
             };
 
@@ -38,7 +40,7 @@ namespace CafeComFormacao.Services
             CredenciaisParticipante credenciaisParticipante = new()
             {
                 Id = participante.ParticipanteId,
-                LoginEmail = participante.Email,
+                LoginEmail = _sanitizarService.RetirarCaracteresPossivelmenteMaliciosos(participante.Email),
                 Senha = senhaSegura
             };
 
