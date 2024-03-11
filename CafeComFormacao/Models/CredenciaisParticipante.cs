@@ -8,5 +8,6 @@ namespace CafeComFormacao.Models
         public int Id { get; set; }
         public string LoginEmail { get; set; }
         public string Senha { get; set; }
+        public bool EmailVerificado { get; set; }
     }
 }

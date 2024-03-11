@@ -7,7 +7,7 @@ namespace CafeComFormacao.Services
     {
         private static RandomNumberGenerator rng = RandomNumberGenerator.Create();
 
-        private static string CriarSal(int tamanho)
+        public string CriarSal(int tamanho)
         {
             byte[] buff = new byte[tamanho];
 

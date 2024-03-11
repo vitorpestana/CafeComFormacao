@@ -19,6 +19,21 @@ namespace CafeComFormacao.Migrations
                 .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("CafeComFormacao.Models.CodigoDeVerificacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Codigo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CodigoDeVerificacaos");
+                });
+
             modelBuilder.Entity("CafeComFormacao.Models.CredenciaisAdm", b =>
                 {
                     b.Property<int>("Id")
@@ -47,6 +62,9 @@ namespace CafeComFormacao.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<bool>("EmailVerificado")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LoginEmail")
                         .IsRequired()

@@ -1,5 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Café com Formação";
+
+    if (ViewBag.CodigoVerificacao != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.CodigoVerificacao
+        </div>
+    }
 }
 
 <div class="text-center">

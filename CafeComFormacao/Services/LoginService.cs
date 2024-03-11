@@ -19,9 +19,9 @@ namespace CafeComFormacao.Services
 
         public async Task<object> VerificarCredenciais(string usuario, string senha)
         {
-            dynamic login = await _participanteRepository.VerificarSeEhAdm(usuario, senha);
+            dynamic login = await _participanteRepository.VerificarSeEhAdm(usuario);
 
-            login ??= await _participanteRepository.VerificarCredenciais(usuario, senha);
+            login ??= await _participanteRepository.VerificarCredenciais(usuario);
 
             bool senhaVerificada = VerificarSenha(login, senha);
 

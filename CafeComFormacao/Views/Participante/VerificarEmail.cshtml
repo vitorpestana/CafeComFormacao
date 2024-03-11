@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Café com Formação";
+
+    if (ViewBag.CodigoVerificacao != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.CodigoVerificacao
+        </div>
+    }
+}
+<div class="container-fluid mx-auto mt-xxl-5">
+    <form asp-controller="Participante" asp-action="VerificarCodigoDeVerificacao" method="post">
+        @Html.AntiForgeryToken()
+        <h1 class="text-center">Verificação</h1>
+        <div class="form-group mt-lg-5">
+            <label class="control-label">Validação do código</label>
+            <input type="text" name="codigoDeVerificacao" class="form-control" placeholder="Código aqui">
+        </div>
+        
+        <button id="botaoEnviar" type="submit" class="btn btn-success mt-3">Cadastrar-se</button>
+    </form>
+</div>

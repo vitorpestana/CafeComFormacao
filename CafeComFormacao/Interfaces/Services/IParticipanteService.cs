@@ -11,5 +11,6 @@ namespace CafeComFormacao.Interfaces.Services
         Task<List<Participante>> ListarParcipantesService();
         Task<bool> VerificarExistenciaEmail(string email);
         Task<bool> VerificarExistenciaCelular(string celular);
+        Task<(string, string)> VerificarCodigoEnviadoPeloEmail(string codigoDeVerificacao);
     }
 }

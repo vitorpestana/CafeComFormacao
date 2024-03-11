@@ -9,12 +9,10 @@ namespace CafeComFormacao.Controllers
     public class ParticipanteController : Controller
     {
         private readonly IParticipanteService _participanteService;
-        private readonly ISanitizarService _sanitizarService;
 
-        public ParticipanteController(IParticipanteService participanteService, ISanitizarService sanitizarService)
+        public ParticipanteController(IParticipanteService participanteService)
         {
             _participanteService = participanteService;
-            _sanitizarService = sanitizarService;
         }
 
         public IActionResult Cadastro()
@@ -28,7 +26,9 @@ namespace CafeComFormacao.Controllers
         {
             await _participanteService.CriarParticipanteService(participante);
 
-            return View("./Views/Login/Index.cshtml");
+            ViewBag.CodigoVerificacao = "Um código de verificação foi enviado para o seu email. Para completar seu cadastro e realizar seu login, copie e cole o código no link indicado no email.";
+
+            return View("./Views/Home/Index.cshtml");
         }
 
         [HttpPost]
@@ -75,6 +75,23 @@ namespace CafeComFormacao.Controllers
         public async Task<bool> VerificarSeOCelularJaExiste(string celular)
         {
             return await _participanteService.VerificarExistenciaCelular(celular);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VerificarCodigoDeVerificacao(string codigoDeVerificacao)
+        {
+            (string alertaDeRetorno, string viewDeRetorno) stringsDeRetorno= await _participanteService.VerificarCodigoEnviadoPeloEmail(codigoDeVerificacao);
+
+            ViewBag.CodigoVerificacao = stringsDeRetorno.alertaDeRetorno;
+
+            return View(stringsDeRetorno.viewDeRetorno);
+        }
+
+        [HttpGet]
+        public IActionResult VerificarEmail()
+        {
+            return View();
         }
     }
 }

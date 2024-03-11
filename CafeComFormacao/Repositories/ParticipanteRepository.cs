@@ -18,7 +18,7 @@ namespace CafeComFormacao.Repositories
         {
             _context.Participante.Add(participante);
 
-            await  _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
         public async Task InserirCredenciais(CredenciaisParticipante credenciaisParticipante)
@@ -49,12 +49,12 @@ namespace CafeComFormacao.Repositories
 
         }
 
-        public async Task<CredenciaisParticipante> VerificarCredenciais(string usuario, string senha)
+        public async Task<CredenciaisParticipante> VerificarCredenciais(string usuario)
         {
             return await _context.CredenciaisParticipante.Where(x => x.LoginEmail.Trim() == usuario).FirstOrDefaultAsync();
         }
 
-        public async Task<CredenciaisAdm> VerificarSeEhAdm(string usuario, string senha)
+        public async Task<CredenciaisAdm> VerificarSeEhAdm(string usuario)
         {
             return await _context.CredenciaisAdm.Where(x => x.LoginEmail.Trim() == usuario).FirstOrDefaultAsync();
         }
@@ -79,6 +79,38 @@ namespace CafeComFormacao.Repositories
         public async Task<bool> VerificarSeOCelularExiste(string celular)
         {
             return await _context.Participante.AnyAsync(x => x.Celular == celular);
+        }
+
+        public async Task InserirCodigoDeVerificacao(string codigoDeVerificacao)
+        {
+            CodigoDeVerificacao codigoVerificacaoQueSeráPersistido = new()
+            {
+                Codigo = codigoDeVerificacao
+            };
+
+            _context.CodigoDeVerificacaos.Add(codigoVerificacaoQueSeráPersistido);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<string> ObterIdParticipante(string email)
+        {
+            int idParticipante = await _context.Participante.Where(x => x.Email == email).Select(y => y.Id).FirstOrDefaultAsync();
+            return idParticipante.ToString();
+        }
+
+        public async Task<bool> VerificarCodigoDeValidacao(string codigoDeVerificacao)
+        {
+            return await _context.CodigoDeVerificacaos.AnyAsync(x => x.Codigo == codigoDeVerificacao);
+        }
+
+        public async Task DeletarCodigoDeVerificacao(string codigoDeVerificacao)
+        {
+            CodigoDeVerificacao codigoQueSeráRemovido = await _context.CodigoDeVerificacaos.Select(x => x).Where(x => x.Codigo == codigoDeVerificacao).FirstOrDefaultAsync();
+
+            _context.CodigoDeVerificacaos.Remove(codigoQueSeráRemovido);
+
+            await _context.SaveChangesAsync();
         }
     }
 }

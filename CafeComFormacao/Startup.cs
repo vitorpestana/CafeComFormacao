@@ -1,5 +1,6 @@
 ﻿using CafeComFormacao.Data;
 using CafeComFormacao.Services;
+using CafeComFormacao.Models;
 using CafeComFormacao.Repositories;
 using CafeComFormacao.Interfaces.Repositories;
 using CafeComFormacao.Interfaces.Services;
@@ -36,9 +37,12 @@ namespace CafeComFormacao
                 options.HeaderName = "TokenCSRFDeValidação";
             });
 
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+
             services.AddControllersWithViews();
 
             services.AddScoped<IHashService, HashService>();
+            services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<ISanitizarService, SanitizarService>();
             services.AddScoped<IEventoRepository, EventoRepository>();
             services.AddScoped<IParticipanteRepository, ParticipanteRepository>();

@@ -78,3 +78,6 @@ C:\Users\vpestana\Documents\exercicios c#\CafeComFormacao\CafeComFormacao\CafeCo
 C:\Users\vpestana\Documents\exercicios c#\CafeComFormacao\CafeComFormacao\CafeComFormacao\obj\Debug\net8.0\CafeComFormacao.pdb
 C:\Users\vpestana\Documents\exercicios c#\CafeComFormacao\CafeComFormacao\CafeComFormacao\obj\Debug\net8.0\CafeComFormacao.genruntimeconfig.cache
 C:\Users\vpestana\Documents\exercicios c#\CafeComFormacao\CafeComFormacao\CafeComFormacao\obj\Debug\net8.0\ref\CafeComFormacao.dll
+C:\Users\vpestana\Documents\exercicios c#\CafeComFormacao\CafeComFormacao\CafeComFormacao\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+C:\Users\vpestana\Documents\exercicios c#\CafeComFormacao\CafeComFormacao\CafeComFormacao\bin\Debug\net8.0\MailKit.dll
+C:\Users\vpestana\Documents\exercicios c#\CafeComFormacao\CafeComFormacao\CafeComFormacao\bin\Debug\net8.0\MimeKit.dll
