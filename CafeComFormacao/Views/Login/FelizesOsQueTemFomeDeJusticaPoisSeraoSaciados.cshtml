@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Login";
+
+    if (ViewBag.Aviso != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @ViewBag.Aviso
+        </div>
+    }
+
+    if (ViewBag.CodigoVerificacao != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @ViewBag.CodigoVerificacao
+        </div>
+    }
+}
+
+<form asp-controller="Login" asp-action="LogarAdm" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group form-check mt-lg-3">
+        <label for="usuario" class="control-label">Email</label>
+        <input id="usuario" name="usuario" type="text" class="form-control">
+    </div>
+
+    <div class="form-group form-check mt-lg-3">
+        <label for="senha" class="control-label">Senha</label>
+        <input id="senha" name="senha" type="password" class="form-control">
+    </div>
+
+    <div class="form-group form-check mt-lg-3">
+        <label for="lembrar" class="form-check-label">Manter-me Logado</label>
+        <input value="true" type="checkbox" name="Lembrar" class="form-check-input">
+    </div>
+
+    <input id="botao" type="submit" value="Logar" />
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            setInterval(verificarSeEstaPreenchido, 100)
+        });
+    </script>
+}

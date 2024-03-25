@@ -2,9 +2,11 @@
 {
     $(document).ready(function ()
     {
-        if ($(".carregar").val() != null) {
+        var carregar = $(".carregar").val();
+
+        if (carregar != null) {
             $.ajax({
-                url: $(".carregar").val(),
+                url: carregar,
                 type: "GET",
                 success: function (result) {
                     $(".ajaxDiv").html(result);
@@ -33,7 +35,6 @@ function ajaxCadastro()
 {
     $(document).ready(function () {
         var $botaoEnviar = $('#botaoEnviar');
-        var tempo;
 
         $("#email").blur(async function () {
             var email = $(this).val();

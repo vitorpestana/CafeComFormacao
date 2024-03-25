@@ -17,25 +17,20 @@ namespace CafeComFormacao.Services
             _hashService = hashService;
         }
 
-        public async Task<object> VerificarCredenciais(string usuario, string senha)
+        public async Task<CredenciaisParticipante> VerificarCredenciais(string usuario, string senha)
         {
-            dynamic login = await _participanteRepository.VerificarSeEhAdm(usuario);
+            CredenciaisParticipante login = await _participanteRepository.VerificarCredenciais(usuario);
 
-            login ??= await _participanteRepository.VerificarCredenciais(usuario);
+            bool senhaVerificada = login == null ? false : VerificarSenha(login, senha);
 
-            bool senhaVerificada = VerificarSenha(login, senha);
+            return senhaVerificada ? login : null;
+        }
 
-            if (senhaVerificada)
-            {
-                if (login is CredenciaisAdm)
-                {
-                    login = new CredenciaisAdm { Id = login.Id, LoginEmail = login.LoginEmail };
-                }
-                else
-                {
-                    login = new CredenciaisParticipante { Id = login.Id, LoginEmail = login.LoginEmail };
-                }
-            }
+        public async Task<CredenciaisAdm> VerificarCredenciaisAdm(string usuario, string senha)
+        {
+            CredenciaisAdm login = await _participanteRepository.VerificarSeEhAdm(usuario);
+
+            bool senhaVerificada = login == null ? false: VerificarSenha(login, senha);
 
             return senhaVerificada ? login : null;
         }

@@ -30,6 +30,34 @@ namespace CafeComFormacao.Controllers
             return View();
         }
 
+        public IActionResult FelizesOsQueTemFomeDeJusticaPoisSeraoSaciados()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogarAdm(string usuario, string senha, bool lembrar)
+        {
+            CredenciaisAdm login = await _loginService.VerificarCredenciaisAdm(usuario, senha);
+
+            if (login == null)
+            {
+                ViewBag.Aviso = "Credenciais de acesso erradas!";
+
+                return View("FelizesOsQueTemFomeDeJusticaPoisSeraoSaciados");
+            }
+
+            ClaimsPrincipal principal = _loginService.ConfigurarCookies(login);
+
+            await HttpContext.SignInAsync("CookieAuthentication", principal, new AuthenticationProperties()
+            {
+                IsPersistent = lembrar
+            });
+
+            return RedirectToAction("Admin", "Login");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logar(string usuario, string senha, bool lembrar)
