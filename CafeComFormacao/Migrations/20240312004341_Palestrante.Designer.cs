@@ -3,6 +3,7 @@ using System;
 using CafeComFormacao.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeComFormacao.Migrations
 {
     [DbContext(typeof(CafeComFormacaoContext))]
-    partial class CafeComFormacaoContextModelSnapshot : ModelSnapshot
+    [Migration("20240312004341_Palestrante")]
+    partial class Palestrante
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,27 +106,6 @@ namespace CafeComFormacao.Migrations
                     b.ToTable("Evento");
                 });
 
-            modelBuilder.Entity("CafeComFormacao.Models.EventoPalestrante", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("EventoId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PalestranteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EventoId");
-
-                    b.HasIndex("PalestranteId");
-
-                    b.ToTable("EventoPalestrante");
-                });
-
             modelBuilder.Entity("CafeComFormacao.Models.Palestrante", b =>
                 {
                     b.Property<int>("Id")
@@ -196,25 +177,6 @@ namespace CafeComFormacao.Migrations
                     b.HasIndex("ParticipanteId");
 
                     b.ToTable("UsuarioEvento");
-                });
-
-            modelBuilder.Entity("CafeComFormacao.Models.EventoPalestrante", b =>
-                {
-                    b.HasOne("CafeComFormacao.Models.Evento", "Evento")
-                        .WithMany()
-                        .HasForeignKey("EventoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CafeComFormacao.Models.Palestrante", "Palestrante")
-                        .WithMany()
-                        .HasForeignKey("PalestranteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Evento");
-
-                    b.Navigation("Palestrante");
                 });
 
             modelBuilder.Entity("CafeComFormacao.Models.UsuarioEvento", b =>

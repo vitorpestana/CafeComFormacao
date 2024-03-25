@@ -25,6 +25,10 @@ namespace CafeComFormacao.Controllers
         {
             _eventoService.CriarNovoEventoService(nomeDoEvento, dataDoEvento, horaDoEvento, valorDoEvento);
 
+            ViewBag.CarregarDeNovo = "NovoEvento";
+
+            ViewBag.Aviso = "Um novo evento foi criado com sucesso!";
+
             return View("./Views/Login/Admin.cshtml");
         }
 

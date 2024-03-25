@@ -20,6 +20,8 @@ namespace CafeComFormacao.Data
         public DbSet<CafeComFormacao.Models.CredenciaisParticipante> CredenciaisParticipante { get; set; } = default!;
         public DbSet<CafeComFormacao.Models.CredenciaisAdm> CredenciaisAdm { get; set; } = default!;
         public DbSet<CafeComFormacao.Models.CodigoDeVerificacao> CodigoDeVerificacaos { get; set; } = default!;
+        public DbSet<CafeComFormacao.Models.Palestrante> Palestrante { get; set; } = default!;
+        public DbSet<CafeComFormacao.Models.EventoPalestrante> EventoPalestrante { get; set; } = default!;
 
     }
 }

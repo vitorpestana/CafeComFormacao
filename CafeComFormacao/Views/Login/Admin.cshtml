@@ -1,4 +1,12 @@
-﻿<nav id="adminSideBar" class="sidebar col-1 start-0 rounded text-ligh">
+﻿@if (ViewBag.Aviso != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Aviso
+    </div>
+}
+
+
+<nav id="adminSideBar" class="sidebar col-1 start-0 rounded text-ligh">
     <div class="sidebar">
         <ul class="nav col-sm">
             <li class="nav-item">
@@ -16,7 +24,26 @@
                     Listar Eventos por Participantes
                 </a>
             </li>
+            <li class="nav-item">
+                <a asp-controller="Palestrante" asp-action="AdicionarPalestrante" class="nav-link active opcao_nave-bar">
+                    Adicionar um Novo Palestrante
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Palestrante" asp-action="ListarPalestrantes" class="nav-link active opcao_nave-bar">
+                   Listar Palestrantes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Palestrante" asp-action="InserirPalestranteNoEvento" class="nav-link active opcao_nave-bar">
+                    Cadastrar palestrante em um evento
+                </a>
+            </li>
         </ul>
+        @if (@ViewBag.CarregarDeNovo != null)
+        {
+            <input class="carregar" type="hidden" value="@ViewBag.CarregarDeNovo" />
+        }
     </div>
 </nav>
 <div class="d-flex align-items-center justify-content-center">

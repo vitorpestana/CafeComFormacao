@@ -22,12 +22,12 @@
 
     <div class="form-group form-check mt-lg-3">
         <label for="usuario" class="control-label">Email</label>
-        <input name="usuario" type ="text" class="form-control">
+        <input id="usuario" name="usuario" type ="text" class="form-control">
     </div>
 
     <div class="form-group form-check mt-lg-3">
         <label for="senha" class="control-label">Senha</label>
-        <input name="senha" type="password" class="form-control">
+        <input id ="senha" name="senha" type="password" class="form-control">
     </div>
 
     <div class="form-group form-check mt-lg-3">
@@ -35,5 +35,13 @@
         <input value="true" type="checkbox" name="Lembrar" class="form-check-input">
     </div>
 
-    <input type="submit" value="Logar" />
+    <input id="botao" type="submit" value="Logar" />
 </form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            setInterval(verificarSeEstaPreenchido, 100)
+        });
+    </script>
+}

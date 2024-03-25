@@ -22,5 +22,19 @@ body {
 }
 
 #adminSideBar {
-    background-color: #581845;
+    background-color: #6796F3;
+    position: absolute;
+    margin-left: 1em;
+    width: 170px;
+}
+
+#adminSideBar a {
+    color: #0C0C0C;
+    font-size: 18px;
+    white-space: nowrap;
+    margin-bottom: 30px;
+}
+
+#adminSideBar a:hover {
+    color: #C40080;
 }

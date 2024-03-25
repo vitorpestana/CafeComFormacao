@@ -2,7 +2,18 @@
 {
     $(document).ready(function ()
     {
+        if ($(".carregar").val() != null) {
+            $.ajax({
+                url: $(".carregar").val(),
+                type: "GET",
+                success: function (result) {
+                    $(".ajaxDiv").html(result);
+                }
+            });
+        }
+
         $(".opcao_nave-bar").click(function (event) {
+
             event.preventDefault();
 
             var url = $(this).attr("href");
@@ -70,4 +81,22 @@ function ajaxCadastro()
             }
         });
     });
+}
+
+function verificarSeEstaPreenchido() {
+
+    $(document).ready(function () {
+
+        var usuario = $("#usuario").val();
+        var senha = $("#senha").val();
+        var botao = $("#botao");
+
+        if (usuario == "" || senha == "") {
+            botao.prop("disabled", true);
+        }
+        else {
+            botao.prop("disabled", false);
+        }
+    });
+
 }

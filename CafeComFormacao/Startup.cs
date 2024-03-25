@@ -51,6 +51,8 @@ namespace CafeComFormacao
             services.AddScoped<IViewsModelsRepository, ViewsModelsRepository>();
             services.AddScoped<IParticipanteService, ParticipanteService>();
             services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IPalestranteService, PalestranteService>();
+            services.AddScoped<IPalestranteRepository, PalestranteRepository>();
 
         }
 

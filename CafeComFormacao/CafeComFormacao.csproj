@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Content Remove="Views\Login\Logar.cshtml" />
+    <Content Remove="Views\Palestrante\ListarTodosOsPalestrantes.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

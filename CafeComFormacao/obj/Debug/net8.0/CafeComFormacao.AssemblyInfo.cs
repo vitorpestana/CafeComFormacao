@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CafeComFormacao")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5ea3e02decc61567c28a40506bd0ca317115147")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb773682f4d983b772c83e6b82fd4ac7c114b6b5")]
 [assembly: System.Reflection.AssemblyProductAttribute("CafeComFormacao")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CafeComFormacao")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
