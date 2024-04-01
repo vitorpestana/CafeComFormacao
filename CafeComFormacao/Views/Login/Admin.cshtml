@@ -5,50 +5,78 @@
     </div>
 }
 
-
-<nav id="adminSideBar" class="sidebar col-1 start-0 rounded text-ligh">
-    <div class="sidebar">
-        <ul class="nav col-sm">
-            <li class="nav-item">
-                <a asp-controller="Evento" asp-action="NovoEvento" class="nav-link active opcao_nave-bar">
-                    Criar Evento
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-controller="Participante" asp-action="ListarParticipantes" class="nav-link active opcao_nave-bar">
-                    Listar Participantes
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-controller="Participante" asp-action="UsuarioPorEvento" class="nav-link active opcao_nave-bar">
-                    Listar Eventos por Participantes
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-controller="Palestrante" asp-action="AdicionarPalestrante" class="nav-link active opcao_nave-bar">
-                    Adicionar um Novo Palestrante
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-controller="Palestrante" asp-action="ListarPalestrantes" class="nav-link active opcao_nave-bar">
-                   Listar Palestrantes
-                </a>
-            </li>
-            <li class="nav-item">
-                <a asp-controller="Palestrante" asp-action="InserirPalestranteNoEvento" class="nav-link active opcao_nave-bar">
-                    Cadastrar palestrante em um evento
-                </a>
-            </li>
-        </ul>
-        @if (@ViewBag.CarregarDeNovo != null)
-        {
-            <input class="carregar" type="hidden" value="@ViewBag.CarregarDeNovo" />
-        }
-    </div>
-</nav>
+<div class="mainDiv">
+    <aside id="sidebar" class="sidebar col-1 start-0 rounded text-ligh">
+        <div>
+            <ul class="sidebar-nav">
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
+                        data-bs-target="#eventos" aria-expanded="false" aria-controls="eventos">
+                        <i class="lni lni-calendar"></i>
+                        <span>Eventos</span>
+                    </a>
+                    <ul id="eventos" class="sidebar-dropdown list-unstyled collapse"´data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a asp-controller="Evento" asp-action="NovoEvento" class="sidebar-link active opcao_nave-bar">
+                                Criar
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
+                       data-bs-target="#participantes" aria-expanded="false" aria-controls="participantes">
+                        <i class="lni lni-users"></i>
+                        <span>Participantes</span>
+                    </a>
+                    <ul id="participantes" class="sidebar-dropdown list-unstyled collapse" ´data-bs-parent="#sidebar">
+                        <li class="sidebar-item">
+                            <a asp-controller="Participante" asp-action="ListarParticipantes" class="sidebar-link active opcao_nave-bar">
+                                Listar
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a asp-controller="Participante" asp-action="UsuarioPorEvento" class="sidebar-link active opcao_nave-bar">
+                                Inscrições
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse"
+                       data-bs-target="#palestrantes" aria-expanded="false" aria-controls="palestrantes">
+                        <i class="lni lni-user"></i>
+                        <span>Palestrante</span>
+                    </a>
+                    <ul id="palestrantes" class="sidebar-dropdown list-unstyled collapse" ´data-bs-parent="#sidebar">
+                        <li class="nav-item">
+                            <a asp-controller="Palestrante" asp-action="AdicionarPalestrante" class="sidebar-link active opcao_nave-bar">
+                                Novo
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Palestrante" asp-action="ListarPalestrantes" class="sidebar-link active opcao_nave-bar">
+                                Listar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-controller="Palestrante" asp-action="InserirPalestranteNoEvento" class="sidebar-link active opcao_nave-bar">
+                                Eventos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            @if (@ViewBag.CarregarDeNovo != null)
+            {
+                <input class="carregar" type="hidden" value="@ViewBag.CarregarDeNovo" />
+            }
+        </div>
+    </aside>
 <div class="d-flex align-items-center justify-content-center">
         <div class="ajaxDiv">
         </div>
+</div>
 </div>
 
 @section Scripts{

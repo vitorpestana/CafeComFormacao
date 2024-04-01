@@ -5,7 +5,6 @@
 
 <div>
     <form asp-controller="Evento" asp-action="CriarEvento" method="post">
-        <h1 class="text-center">Criar Novo Evento</h1>
         <div class="form-group mt-lg-5">
             <label asp-for="NomeDoEvento" class="control-label"></label>
             <input asp-for="NomeDoEvento" class="form-control" placeholder="Nome do evento">
@@ -17,6 +16,7 @@
         <div class="form-group mt-lg-3">
             <label asp-for="HoraDoEvento" class="control-label"></label>
             <input asp-for="HoraDoEvento" class="form-control" placeholder="Hora do evento">
+            <span asp-validation-for="HoraDoEvento" class="text-danger" style="font-size: 8px;"></span>
         </div>
         <div class="form-group mt-lg-3">
             <label asp-for="ValorDoEvento" class="control-label"></label>

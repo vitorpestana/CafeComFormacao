@@ -7,7 +7,6 @@
 <div class="container-fluid mx-auto mt-xxl-5">
     <form asp-controller="Palestrante" asp-action="CriarPalestrante">
         @Html.AntiForgeryToken()
-        <h1 class="text-center">Adicionar participante:</h1>
         <div class="form-group mt-lg-5">
             <label asp-for="Nome" class="control-label"></label>
             <input asp-for="Nome" class="form-control" placeholder="Seu nome">
